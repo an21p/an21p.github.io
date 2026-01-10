@@ -152,7 +152,10 @@
       <!-- Project 3: Image POST -->
       <div class="card">
         <h3>Queens Solver API</h3>
-        <p>Upload an image and send it as <code>application/octet-stream</code>.</p>
+        <p>Upload an image of an empty Queens board.</p>
+        <img id="previewImage" alt="Preview image" 
+          src="assets/queens.jpeg"
+          style="max-width:100%; border: var(--border); margin-bottom:12px;" />
 
         <div class="stack">
           <input type="file" id="imageInput" accept="image/*" />
@@ -216,7 +219,7 @@
       let imageBuffer;
       if (usingDefault) {
         status.textContent = "No file selected — using default image.";
-        const response = await fetch("assets/default.png");
+        const response = await fetch("assets/queens.png");
         imageBuffer = await response.arrayBuffer();
       } else {
         file = input.files[0];
