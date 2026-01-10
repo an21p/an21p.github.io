@@ -182,8 +182,7 @@
           <button onclick="updateIframe()">Update</button>
           <iframe id="volIframe" src="">
 
-
-            <a id="volVisitLink" href="" target="_blank" display="none">Visit →</a>
+            <a id="volVisitLink" href="" target="_blank" style="display: none;">Visit →</a>
 
           </iframe>
         </div>
@@ -309,8 +308,9 @@
       iframe.src = BASE_VOL_URL + symbol;
       const visitLink = document.getElementById('volVisitLink');
       if (visitLink) {
-        visitLink.style.display = 'inline';
-        visitLink.href = BASE_VOL_URL + symbol;}
+        visitLink.href = BASE_VOL_URL + symbol;
+        visitLink.style.display = 'block';
+      }
     }
   </script>
 
