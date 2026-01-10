@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Antonis Pishias | Portfolio</title>
@@ -26,7 +27,9 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       margin: 0 0 12px 0;
       font-weight: 900;
       text-transform: uppercase;
@@ -117,6 +120,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- ========== Header ========== -->
@@ -154,6 +158,8 @@
           <input type="file" id="imageInput" accept="image/*" />
           <button onclick="sendImage()">Send Image</button>
           <p id="uploadStatus"></p>
+          <img id="resultImage" alt="Result image"
+            style="display:none; max-width:100%; border: var(--border); margin-top:12px;" />
         </div>
       </div>
 
@@ -166,9 +172,7 @@
           <input type="text" id="symbolInput" placeholder="TSLA" />
           <button onclick="updateIframe()">Update</button>
 
-          <iframe
-            id="volIframe"
-            src="">
+          <iframe id="volIframe" src="">
           </iframe>
         </div>
       </div>
@@ -183,21 +187,8 @@
       VOL_AZURE_API_KEY: "__VOL_AZURE_API_KEY__"
     };
 
-    // Default image (small 1x1 PNG) used when no file is selected.
-    // Replace the data URL or the `queens.jpeg` file in the project root with a real image.
-    const DEFAULT_IMAGE_DATA_URL =
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=";
-
-    function dataUrlToArrayBuffer(dataUrl) {
-      const base64 = dataUrl.split(",")[1];
-      const binary = atob(base64);
-      const len = binary.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binary.charCodeAt(i);
-      }
-      return bytes.buffer;
-    }
+    // Track last created object URL so we can revoke it when replaced
+    let _lastResultObjectUrl = null;
 
     // Set an example volatility-surface iframe on page load (example: TSLA)
     document.addEventListener("DOMContentLoaded", function () {
@@ -222,8 +213,11 @@
       const usingDefault = !input.files.length;
       let file = null;
 
+      let imageBuffer;
       if (usingDefault) {
         status.textContent = "No file selected — using default image.";
+        const response = await fetch("assets/default.png");
+        imageBuffer = await response.arrayBuffer();
       } else {
         file = input.files[0];
       }
@@ -241,14 +235,41 @@
               "Content-Type": "application/octet-stream"
             },
             body: usingDefault
-              ? dataUrlToArrayBuffer(DEFAULT_IMAGE_DATA_URL)
+              ? imageBuffer
               : await file.arrayBuffer()
           }
         );
 
-        status.textContent = response.ok
-          ? "Image sent successfully."
-          : `Request failed (status ${response.status}).`;
+        if (!response.ok) {
+          const txt = await response.text().catch(() => null);
+          status.textContent = `Request failed (status ${response.status})${txt ? ': ' + txt : ''}`;
+          // hide previous image if any
+          const imgEl = document.getElementById('resultImage');
+          imgEl.style.display = 'none';
+          return;
+        }
+
+        const contentType = (response.headers.get('content-type') || '').toLowerCase();
+        const imgEl = document.getElementById('resultImage');
+
+        if (contentType.startsWith('image/')) {
+          const blob = await response.blob();
+          // revoke previous url
+          if (_lastResultObjectUrl) {
+            URL.revokeObjectURL(_lastResultObjectUrl);
+            _lastResultObjectUrl = null;
+          }
+          const objectUrl = URL.createObjectURL(blob);
+          _lastResultObjectUrl = objectUrl;
+          imgEl.src = objectUrl;
+          imgEl.style.display = 'block';
+          status.textContent = 'Image received.';
+        } else {
+          // Not an image — show textual response
+          const text = await response.text().catch(() => null);
+          imgEl.style.display = 'none';
+          status.textContent = text ? `Response: ${text}` : 'Request completed.';
+        }
       } catch (err) {
         // A TypeError here often indicates a CORS/network failure in the browser.
         status.textContent =
@@ -269,13 +290,14 @@
       const symbol = input.value.trim().toUpperCase();
 
       const BASE_VOL_URL =
-      "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
-      AZURE_KEY +
-      "&symbol=";
-      
+        "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
+        AZURE_KEY +
+        "&symbol=";
+
       iframe.src = BASE_VOL_URL + symbol;
     }
   </script>
 
 </body>
+
 </html>
