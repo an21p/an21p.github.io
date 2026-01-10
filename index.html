@@ -304,6 +304,8 @@
         "&symbol=";
 
       iframe.src = BASE_VOL_URL + symbol;
+      const visitLink = document.getElementById('volVisitLink');
+      if (visitLink) visitLink.href = BASE_VOL_URL + symbol;
     }
   </script>
 
