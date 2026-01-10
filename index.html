@@ -183,36 +183,78 @@
       VOL_AZURE_API_KEY: "__VOL_AZURE_API_KEY__"
     };
 
+    // Default image (small 1x1 PNG) used when no file is selected.
+    // Replace the data URL or the `queens.jpeg` file in the project root with a real image.
+    const DEFAULT_IMAGE_DATA_URL =
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=";
+
+    function dataUrlToArrayBuffer(dataUrl) {
+      const base64 = dataUrl.split(",")[1];
+      const binary = atob(base64);
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
+
+    // Set an example volatility-surface iframe on page load (example: TSLA)
+    document.addEventListener("DOMContentLoaded", function () {
+      const AZURE_KEY = window.CONFIG.VOL_AZURE_API_KEY;
+      const iframe = document.getElementById("volIframe");
+      const defaultSymbol = "TSLA";
+
+      const BASE_VOL_URL =
+        "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
+        AZURE_KEY +
+        "&symbol=";
+
+      // Set the iframe src so an example is already requested on load
+      iframe.src = BASE_VOL_URL + defaultSymbol;
+    });
+
     async function sendImage() {
       const AZURE_KEY = window.CONFIG.QUEENS_AZURE_API_KEY;
       const input = document.getElementById("imageInput");
       const status = document.getElementById("uploadStatus");
 
-      if (!input.files.length) {
-        status.textContent = "Please select an image first.";
-        return;
+      const usingDefault = !input.files.length;
+      let file = null;
+
+      if (usingDefault) {
+        status.textContent = "No file selected — using default image.";
+      } else {
+        file = input.files[0];
       }
 
-      const file = input.files[0];
-
       try {
+        // Note: CORS must be enabled on the server (Access-Control-Allow-Origin).
+        // This client request will use CORS mode and surface clearer messaging
+        // if the browser blocks the request due to missing server headers.
         const response = await fetch(
-          "https://linkedin-solvers.azurewebsites.net/api/queens/solve?code="
-          + AZURE_KEY,
+          "https://linkedin-solvers.azurewebsites.net/api/queens/solve?code=" + AZURE_KEY,
           {
             method: "POST",
+            mode: "cors",
             headers: {
               "Content-Type": "application/octet-stream"
             },
-            body: await file.arrayBuffer()
+            body: usingDefault
+              ? dataUrlToArrayBuffer(DEFAULT_IMAGE_DATA_URL)
+              : await file.arrayBuffer()
           }
         );
 
         status.textContent = response.ok
           ? "Image sent successfully."
-          : "Request failed.";
+          : `Request failed (status ${response.status}).`;
       } catch (err) {
-        status.textContent = "Error sending image.";
+        // A TypeError here often indicates a CORS/network failure in the browser.
+        status.textContent =
+          err instanceof TypeError
+            ? "CORS or network error. Ensure server allows this origin."
+            : "Error sending image.";
         console.error(err);
       }
     }
