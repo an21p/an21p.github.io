@@ -219,7 +219,7 @@
       let imageBuffer;
       if (usingDefault) {
         status.textContent = "No file selected — using default image.";
-        const response = await fetch("assets/queens.png");
+        const response = await fetch("assets/queens.jpeg");
         imageBuffer = await response.arrayBuffer();
       } else {
         file = input.files[0];
