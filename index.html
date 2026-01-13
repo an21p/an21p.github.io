@@ -5,120 +5,7 @@
   <meta charset="UTF-8" />
   <title>Antonis Pishias | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    /* ========== Neo-Brutalist Base ========== */
-    :root {
-      --bg: #fefefe;
-      --text: #000;
-      --accent: #ff3d00;
-      --border: 4px solid #000;
-      --shadow: 6px 6px 0 #000;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 24px;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    h1,
-    h2,
-    h3 {
-      margin: 0 0 12px 0;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* ========== Layout ========== */
-    header {
-      border: var(--border);
-      padding: 24px;
-      margin-bottom: 32px;
-      box-shadow: var(--shadow);
-      background: #fff;
-    }
-
-    section {
-      margin-bottom: 48px;
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      border: var(--border);
-      padding: 16px;
-      background: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    .card h3 {
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      margin-bottom: 12px;
-      font-size: 14px;
-    }
-
-    /* ========== Buttons & Inputs ========== */
-    button {
-      background: var(--accent);
-      color: #fff;
-      border: var(--border);
-      padding: 10px 16px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-    }
-
-    button:hover {
-      transform: translate(2px, 2px);
-      box-shadow: 3px 3px 0 #000;
-    }
-
-    input[type="text"],
-    input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      border: var(--border);
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
-
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: var(--border);
-      box-shadow: var(--shadow);
-      background: #fff;
-    }
-
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
 
 <body>
@@ -175,16 +62,15 @@
       <div class="card">
         <h3>Volatility Surface</h3>
         <p>Enter a stock symbol (e.g. TSLA, AAPL).</p>
+        <p>Click update to run</p>
 
         <div class="stack">
-          <input type="text" id="symbolInput" placeholder="TSLA" />
+          <input type="text" id="symbolInput" placeholder="TSLA" value="TSLA" />
 
           <button onclick="updateIframe()">Update</button>
           <iframe id="volIframe" src="">
-
-            <a id="volVisitLink" href="" target="_blank" rel="noopener noreferrer" style="display:none">Visit →</a>
-
           </iframe>
+          <a id="volVisitLink" href="" target="_blank" rel="noopener noreferrer" style="display:none">Visit →</a>
         </div>
       </div>
 
@@ -192,127 +78,7 @@
   </section>
 
   <!-- ========== Scripts ========== -->
-  <script>
-    window.CONFIG = {
-      QUEENS_AZURE_API_KEY: "__QUEENS_AZURE_API_KEY__",
-      VOL_AZURE_API_KEY: "__VOL_AZURE_API_KEY__"
-    };
-
-    // Track last created object URL so we can revoke it when replaced
-    let _lastResultObjectUrl = null;
-
-    // Set an example volatility-surface iframe on page load (example: TSLA)
-    document.addEventListener("DOMContentLoaded", function () {
-      const AZURE_KEY = window.CONFIG.VOL_AZURE_API_KEY;
-      const iframe = document.getElementById("volIframe");
-      const defaultSymbol = "TSLA";
-
-      const BASE_VOL_URL =
-        "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
-        AZURE_KEY +
-        "&symbol=";
-
-      // Set the iframe src so an example is already requested on load
-      iframe.src = BASE_VOL_URL + defaultSymbol;
-    });
-
-    async function sendImage() {
-      const AZURE_KEY = window.CONFIG.QUEENS_AZURE_API_KEY;
-      const input = document.getElementById("imageInput");
-      const status = document.getElementById("uploadStatus");
-
-      const usingDefault = !input.files.length;
-      let file = null;
-
-      let imageBuffer;
-      if (usingDefault) {
-        status.textContent = "No file selected — using default image.";
-        const response = await fetch("assets/queens.jpeg");
-        imageBuffer = await response.arrayBuffer();
-      } else {
-        file = input.files[0];
-      }
-
-      try {
-        // Note: CORS must be enabled on the server (Access-Control-Allow-Origin).
-        // This client request will use CORS mode and surface clearer messaging
-        // if the browser blocks the request due to missing server headers.
-        const response = await fetch(
-          "https://linkedin-solvers.azurewebsites.net/api/queens/solve?code=" + AZURE_KEY,
-          {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/octet-stream"
-            },
-            body: usingDefault
-              ? imageBuffer
-              : await file.arrayBuffer()
-          }
-        );
-
-        if (!response.ok) {
-          const txt = await response.text().catch(() => null);
-          status.textContent = `Request failed (status ${response.status})${txt ? ': ' + txt : ''}`;
-          // hide previous image if any
-          const imgEl = document.getElementById('resultImage');
-          imgEl.style.display = 'none';
-          return;
-        }
-
-        const contentType = (response.headers.get('content-type') || '').toLowerCase();
-        const imgEl = document.getElementById('resultImage');
-
-        if (contentType.startsWith('image/')) {
-          const blob = await response.blob();
-          // revoke previous url
-          if (_lastResultObjectUrl) {
-            URL.revokeObjectURL(_lastResultObjectUrl);
-            _lastResultObjectUrl = null;
-          }
-          const objectUrl = URL.createObjectURL(blob);
-          _lastResultObjectUrl = objectUrl;
-          imgEl.src = objectUrl;
-          imgEl.style.display = 'block';
-          status.textContent = 'Image received.';
-        } else {
-          // Not an image — show textual response
-          const text = await response.text().catch(() => null);
-          imgEl.style.display = 'none';
-          status.textContent = text ? `Response: ${text}` : 'Request completed.';
-        }
-      } catch (err) {
-        // A TypeError here often indicates a CORS/network failure in the browser.
-        status.textContent =
-          err instanceof TypeError
-            ? "CORS or network error. Ensure server allows this origin."
-            : "Error sending image.";
-        console.error(err);
-      }
-    }
-
-    function updateIframe() {
-      const AZURE_KEY = window.CONFIG.VOL_AZURE_API_KEY;
-      const input = document.getElementById("symbolInput");
-      const iframe = document.getElementById("volIframe");
-
-      if (!input.value.trim()) return;
-
-      const symbol = input.value.trim().toUpperCase();
-
-      const BASE_VOL_URL =
-        "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
-        AZURE_KEY +
-        "&symbol=";
-
-      iframe.src = BASE_VOL_URL + symbol;
-      const visitLink = document.getElementById('volVisitLink');
-      if (visitLink) {
-        visitLink.href = BASE_VOL_URL + symbol;
-        visitLink.style.display = 'block';
-      }
-    }
-  </script>
+  <script src="assets/main.js"></script>
 
 </body>
 
