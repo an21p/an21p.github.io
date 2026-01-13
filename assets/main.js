@@ -16,7 +16,7 @@ let _lastResultObjectUrl = null;
 //   const BASE_VOL_URL =
 //     "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
 //     AZURE_KEY +
-//     "&symbol=";
+//     "&ticker=";
 //
 //   // Set the iframe src so an example is already requested on load
 //   iframe.src = BASE_VOL_URL + defaultSymbol;
@@ -109,7 +109,7 @@ function updateIframe() {
   const BASE_VOL_URL =
     "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
     AZURE_KEY +
-    "&symbol=";
+    "&ticker=";
 
   iframe.src = BASE_VOL_URL + symbol;
   const visitLink = document.getElementById('volVisitLink');
