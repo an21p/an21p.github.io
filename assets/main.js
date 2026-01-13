@@ -1,4 +1,3 @@
-// Scripts extracted from index.html
 window.CONFIG = {
   QUEENS_AZURE_API_KEY: "__QUEENS_AZURE_API_KEY__",
   VOL_AZURE_API_KEY: "__VOL_AZURE_API_KEY__"
