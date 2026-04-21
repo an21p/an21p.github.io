@@ -31,11 +31,12 @@ async function sendImage() {
 
   let imageBuffer;
   if (usingDefault) {
-    status.textContent = "No file selected — using default image.";
+    status.textContent = "NO FILE — USING DEFAULT BOARD";
     const response = await fetch("assets/queens.jpeg");
     imageBuffer = await response.arrayBuffer();
   } else {
     file = input.files[0];
+    status.textContent = "UPLOADING " + file.name.toUpperCase();
   }
 
   try {
@@ -58,8 +59,7 @@ async function sendImage() {
 
     if (!response.ok) {
       const txt = await response.text().catch(() => null);
-      status.textContent = `Request failed (status ${response.status})${txt ? ': ' + txt : ''}`;
-      // hide previous image if any
+      status.textContent = `REQUEST FAILED — ${response.status}${txt ? ': ' + txt : ''}`.toUpperCase();
       const imgEl = document.getElementById('resultImage');
       imgEl.style.display = 'none';
       return;
@@ -79,19 +79,17 @@ async function sendImage() {
       _lastResultObjectUrl = objectUrl;
       imgEl.src = objectUrl;
       imgEl.style.display = 'block';
-      status.textContent = 'Image received.';
+      status.textContent = 'SOLVED — BOARD RECEIVED';
     } else {
-      // Not an image — show textual response
       const text = await response.text().catch(() => null);
       imgEl.style.display = 'none';
-      status.textContent = text ? `Response: ${text}` : 'Request completed.';
+      status.textContent = text ? `RESPONSE — ${text}`.toUpperCase() : 'REQUEST COMPLETE';
     }
   } catch (err) {
-    // A TypeError here often indicates a CORS/network failure in the browser.
     status.textContent =
       err instanceof TypeError
-        ? "CORS or network error. Ensure server allows this origin."
-        : "Error sending image.";
+        ? "CORS / NETWORK ERROR — CHECK SERVER ORIGIN"
+        : "ERROR SENDING IMAGE";
     console.error(err);
   }
 }
@@ -114,6 +112,6 @@ function updateIframe() {
   const visitLink = document.getElementById('volVisitLink');
   if (visitLink) {
     visitLink.href = BASE_VOL_URL + symbol;
-    visitLink.style.display = 'block';
+    visitLink.style.display = '';
   }
 }

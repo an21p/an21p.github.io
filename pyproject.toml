@@ -1,0 +1,23 @@
+[project]
+name = "an21p-portfolio"
+version = "0.0.0"
+description = "Static portfolio site — test harness only, not a Python package."
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-playwright>=0.5",
+    "beautifulsoup4>=4.12",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "e2e: browser-based end-to-end tests (requires `playwright install chromium`)",
+]
+addopts = "-ra"

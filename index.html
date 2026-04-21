@@ -3,79 +3,231 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Antonis Pishias | Portfolio</title>
+  <title>Antonis Pishias — Quant Developer / Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Antonis Pishias — Quant Developer. Games, experiments, APIs, web." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 
 <body>
 
-  <!-- ========== Header ========== -->
-  <header>
-    <h1>Antonis Pishias</h1>
-    <p>Qunat Developer · Games · Experiments · APIs · Web</p>
-  </header>
-
-  <!-- ========== Projects Section ========== -->
-  <section>
-    <h2>Projects</h2>
-
-    <div class="projects">
-
-      <!-- Project 1 -->
-      <div class="card">
-        <h3>JMBLD</h3>
-        <p>A single/multi player word-based puzzle game</p>
-        <p>You are presented with a board of 25 letters 5 per word and you are tasked to find the words in a certain
-          amount of moves</p>
-        <p>Build on Phoenix with Elixir</p>
-        <a href="https://JMBLD.fun" target="_blank">Visit →</a>
-      </div>
-
-      <!-- Project 2 -->
-      <div class="card">
-        <h3>Groove Grind</h3>
-        <p>An application that uses Beatport's API to help artists explore other artists releases</p>
-        <p>Mainly focusing on the usecase of exploring what labels an artist has released music on in chronological
-          order</p>
-        <p>The key challenge of this project was reverse engineering the Beatport API</p>
-        <a href="https://groove-grind.azurewebsites.net/" target="_blank">Visit →</a>
-      </div>
-
-      <!-- Project 3: Image POST -->
-      <div class="card">
-        <h3>Queens Solver API</h3>
-        <p>Upload an image of an empty Queens board.</p>
-        <img id="previewImage" alt="Preview image" src="assets/queens.jpeg"
-          style="max-width:50%; border: var(--border); margin-bottom:12px;" />
-
-        <div class="stack">
-          <input type="file" id="imageInput" accept="image/*" />
-          <button onclick="sendImage()">Send Image</button>
-          <p id="uploadStatus"></p>
-          <img id="resultImage" alt="Result image"
-            style="display:none; max-width:100%; border: var(--border); margin-top:12px;" />
-        </div>
-      </div>
-
-      <!-- Project 4: Volatility Surface -->
-      <div class="card">
-        <h3>Volatility Surface</h3>
-        <p>Enter a stock symbol (e.g. TSLA, AAPL).</p>
-        <p>Click update to run</p>
-
-        <div class="stack">
-          <input type="text" id="symbolInput" placeholder="TSLA" value="TSLA" />
-
-          <button onclick="updateIframe()">Update</button>
-          <iframe id="volIframe" src="">
-          </iframe>
-          <a id="volVisitLink" href="" target="_blank" rel="noopener noreferrer" style="display:none">Visit →</a>
-        </div>
-      </div>
-
+  <!-- ========== Ticker ========== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>Antonis Pishias</span><span class="ticker__sep">◆</span>
+      <span>Portfolio · MMXXVI</span><span class="ticker__sep">◆</span>
+      <span>Alpha</span><span class="ticker__sep">·</span>
+      <span>Beta</span><span class="ticker__sep">·</span>
+      <span>Gamma</span><span class="ticker__sep">·</span>
+      <span>Theta</span><span class="ticker__sep">·</span>
+      <span>Vega</span><span class="ticker__sep">·</span>
+      <span>Rho</span><span class="ticker__sep">◆</span>
+      <span>Quant Dev</span><span class="ticker__sep">·</span>
+      <span>Games</span><span class="ticker__sep">·</span>
+      <span>APIs</span><span class="ticker__sep">·</span>
+      <span>Experiments</span><span class="ticker__sep">◆</span>
+      <span>Tick</span><span class="ticker__sep">·</span>
+      <span>Vol</span><span class="ticker__sep">·</span>
+      <span>Strike</span><span class="ticker__sep">·</span>
+      <span>Expiry</span><span class="ticker__sep">·</span>
+      <span>Premium</span><span class="ticker__sep">◆</span>
+      <!-- duplicate for seamless loop -->
+      <span>Antonis Pishias</span><span class="ticker__sep">◆</span>
+      <span>Portfolio · MMXXVI</span><span class="ticker__sep">◆</span>
+      <span>Alpha</span><span class="ticker__sep">·</span>
+      <span>Beta</span><span class="ticker__sep">·</span>
+      <span>Gamma</span><span class="ticker__sep">·</span>
+      <span>Theta</span><span class="ticker__sep">·</span>
+      <span>Vega</span><span class="ticker__sep">·</span>
+      <span>Rho</span><span class="ticker__sep">◆</span>
+      <span>Quant Dev</span><span class="ticker__sep">·</span>
+      <span>Games</span><span class="ticker__sep">·</span>
+      <span>APIs</span><span class="ticker__sep">·</span>
+      <span>Experiments</span><span class="ticker__sep">◆</span>
+      <span>Tick</span><span class="ticker__sep">·</span>
+      <span>Vol</span><span class="ticker__sep">·</span>
+      <span>Strike</span><span class="ticker__sep">·</span>
+      <span>Expiry</span><span class="ticker__sep">·</span>
+      <span>Premium</span><span class="ticker__sep">◆</span>
     </div>
-  </section>
+  </div>
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="shell">
+
+    <!-- ========== Masthead ========== -->
+    <header class="masthead">
+      <div class="masthead__meta">
+        <span class="stamp">Portfolio — MMXXVI</span>
+        <span class="stamp stamp--volt">Open to work</span>
+        <span class="stamp stamp--live">
+          <span class="pulse" aria-hidden="true"></span>
+          Live feed
+        </span>
+      </div>
+
+      <h1 class="masthead__name">
+        <span class="masthead__first">Antonis</span>
+        <span class="masthead__last"><em>Pishias</em></span>
+      </h1>
+
+      <p class="masthead__role">
+        <span>Quant Developer</span><span class="dot"></span>
+        <span>Games</span><span class="dot"></span>
+        <span>Experiments</span><span class="dot"></span>
+        <span>APIs</span><span class="dot"></span>
+        <span>Web</span>
+      </p>
+
+      <dl class="masthead__specs">
+        <div>
+          <dt>Base</dt>
+          <dd>Remote / EU</dd>
+        </div>
+        <div>
+          <dt>Stack</dt>
+          <dd>Elixir · Python · JS</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd>Volatility · Tooling · Play</dd>
+        </div>
+      </dl>
+
+      <span class="corner corner--tl">◸</span>
+      <span class="corner corner--tr">◹</span>
+      <span class="corner corner--bl">◺</span>
+      <span class="corner corner--br">◿</span>
+    </header>
+
+    <!-- ========== Projects ========== -->
+    <section class="projects-section">
+      <div class="section-head">
+        <span class="section-head__label">Index</span>
+        <h2>Selected Work</h2>
+        <span class="section-head__count">04 / 04</span>
+      </div>
+
+      <div class="projects">
+
+        <!-- 01 · JMBLD -->
+        <article class="card card--01">
+          <header class="card__head">
+            <span class="card__index" data-index="01">01</span>
+            <span class="card__tag">Game · Elixir</span>
+          </header>
+          <h3>JMBLD</h3>
+          <p class="card__lede">A single / multi-player word puzzle.</p>
+          <p>You are presented with a board of 25 letters — 5 per word — and tasked to find the words in a limited number of moves.</p>
+          <p class="card__note">Shipped on Phoenix / Elixir</p>
+          <a class="btn btn--ghost" href="https://JMBLD.fun" target="_blank" rel="noopener noreferrer">
+            <span>Play live</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </article>
+
+        <!-- 02 · Groove Grind -->
+        <article class="card card--02">
+          <header class="card__head">
+            <span class="card__index" data-index="02">02</span>
+            <span class="card__tag">API · Music</span>
+          </header>
+          <h3>Groove Grind</h3>
+          <p class="card__lede">
+            Beatport's API, reimagined for <span class="accent-serif">crate diggers</span>.
+          </p>
+          <p>Explore an artist's releases chronologically — focused on which labels shaped their catalogue.</p>
+          <p class="card__note">Reverse-engineered the Beatport API</p>
+          <a class="btn btn--ghost" href="https://groove-grind.azurewebsites.net/" target="_blank" rel="noopener noreferrer">
+            <span>Visit</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </article>
+
+        <!-- 03 · Queens Solver -->
+        <article class="card card--03">
+          <header class="card__head">
+            <span class="card__index" data-index="03">03</span>
+            <span class="card__tag">ML · Vision</span>
+          </header>
+          <h3>Queens Solver</h3>
+          <p class="card__lede">
+            Upload an empty <span class="accent-serif">Queens</span> board — receive a solved board.
+          </p>
+
+          <figure class="card__media">
+            <img id="previewImage" alt="Preview of an empty Queens puzzle board" src="assets/queens.jpeg" />
+            <figcaption>Sample</figcaption>
+          </figure>
+
+          <div class="stack">
+            <label class="field">
+              <span class="field__label">Image input</span>
+              <input type="file" id="imageInput" accept="image/*" />
+            </label>
+            <button class="btn" onclick="sendImage()">
+              <span>Solve board</span>
+              <span class="btn__arrow" aria-hidden="true">↗</span>
+            </button>
+            <p id="uploadStatus" class="status"></p>
+            <img id="resultImage" class="card__result" alt="Solved Queens board" />
+          </div>
+        </article>
+
+        <!-- 04 · Volatility Surface -->
+        <article class="card card--04">
+          <header class="card__head">
+            <span class="card__index" data-index="04">04</span>
+            <span class="card__tag">Quant · Options</span>
+          </header>
+          <h3>Vol Surface</h3>
+          <p class="card__lede">
+            Plot an options <span class="accent-serif">volatility surface</span> for any liquid ticker.
+          </p>
+          <p>Type a symbol, render the surface.</p>
+
+          <div class="stack">
+            <label class="field field--row">
+              <span class="field__label">Ticker</span>
+              <input type="text" id="symbolInput" placeholder="TSLA" value="TSLA" maxlength="8" />
+            </label>
+            <button class="btn" onclick="updateIframe()">
+              <span>Render surface</span>
+              <span class="btn__arrow" aria-hidden="true">↗</span>
+            </button>
+            <iframe id="volIframe" src="" title="Volatility surface" loading="lazy"></iframe>
+            <a id="volVisitLink" class="btn btn--ghost" href="" target="_blank" rel="noopener noreferrer">
+              <span>Open standalone</span>
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== Colophon ========== -->
+    <footer class="colophon">
+      <div class="colophon__marks" aria-hidden="true">
+        <span>◼</span><span>◼</span><span>◼</span><span>◼</span>
+      </div>
+      <div class="colophon__text">
+        <p>© MMXXVI — Antonis Pishias. Shipped on GitHub Pages.</p>
+        <p class="colophon__muted">
+          Set in Big Shoulders Display, JetBrains Mono &amp; <span class="accent-serif">Instrument Serif</span>.
+          Printed in ink and chartreuse.
+        </p>
+      </div>
+    </footer>
+
+  </main>
 
   <!-- ========== Scripts ========== -->
   <script src="assets/main.js"></script>
