@@ -3,24 +3,28 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Antonis Pishias — Quant Developer / Portfolio</title>
+  <title>Antonis Pishias — Quant Developer / Console MMXXVI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Portfolio of Antonis Pishias — Quant Developer. Games, experiments, APIs, web." />
+  <meta name="theme-color" content="#0b0b0b" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 
 <body>
 
-  <!-- ========== Ticker ========== -->
-  <div class="ticker" aria-hidden="true">
+  <!-- scroll progress -->
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <!-- top ticker -->
+  <div class="ticker ticker--top" aria-hidden="true">
     <div class="ticker__track">
       <span>Antonis Pishias</span><span class="ticker__sep">◆</span>
-      <span>Portfolio · MMXXVI</span><span class="ticker__sep">◆</span>
+      <span>Console · MMXXVI</span><span class="ticker__sep">◆</span>
       <span>Alpha</span><span class="ticker__sep">·</span>
       <span>Beta</span><span class="ticker__sep">·</span>
       <span>Gamma</span><span class="ticker__sep">·</span>
@@ -36,9 +40,10 @@
       <span>Strike</span><span class="ticker__sep">·</span>
       <span>Expiry</span><span class="ticker__sep">·</span>
       <span>Premium</span><span class="ticker__sep">◆</span>
-      <!-- duplicate for seamless loop -->
+    </div>
+    <div class="ticker__track" aria-hidden="true">
       <span>Antonis Pishias</span><span class="ticker__sep">◆</span>
-      <span>Portfolio · MMXXVI</span><span class="ticker__sep">◆</span>
+      <span>Console · MMXXVI</span><span class="ticker__sep">◆</span>
       <span>Alpha</span><span class="ticker__sep">·</span>
       <span>Beta</span><span class="ticker__sep">·</span>
       <span>Gamma</span><span class="ticker__sep">·</span>
@@ -57,23 +62,49 @@
     </div>
   </div>
 
-  <!-- Grain overlay -->
+  <!-- HUD / system line -->
+  <div class="hud" role="status" aria-live="off">
+    <span class="hud__cell"><span class="hud__k">vol</span><span class="hud__v">VI</span></span>
+    <span class="hud__cell"><span class="hud__k">iss</span><span class="hud__v">№ 004</span></span>
+    <span class="hud__cell"><span class="hud__k">loc</span><span class="hud__v">EU ⟶ Remote</span></span>
+    <span class="hud__cell"><span class="hud__k">sig</span><span class="hud__v"><span class="pulse"></span>live</span></span>
+    <span class="hud__cell hud__cell--clock"><span class="hud__k">clk</span><span class="hud__v" id="clock">--:--:-- UTC</span></span>
+  </div>
+
+  <!-- grain overlay -->
   <div class="grain" aria-hidden="true"></div>
 
   <main class="shell">
 
-    <!-- ========== Masthead ========== -->
+    <!-- gutter coordinates -->
+    <aside class="gutter gutter--left" aria-hidden="true">
+      <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span>
+    </aside>
+    <aside class="gutter gutter--right" aria-hidden="true">
+      <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span>
+    </aside>
+
+    <!-- masthead -->
     <header class="masthead">
-      <div class="masthead__meta">
-        <span class="stamp">Portfolio — MMXXVI</span>
-        <span class="stamp stamp--volt">Open to work</span>
-        <span class="stamp stamp--live">
-          <span class="pulse" aria-hidden="true"></span>
-          Live feed
-        </span>
+      <div class="masthead__topline">
+        <span>Vol. VI</span>
+        <span>Issue № 004</span>
+        <span>MMXXVI</span>
+        <span>EU · Remote</span>
+        <span>Fair · 12°</span>
       </div>
 
-      <h1 class="masthead__name">
+      <div class="masthead__meta">
+        <span class="stamp stamp--ink">Portfolio</span>
+        <span class="stamp stamp--volt">Open to Work</span>
+        <span class="stamp stamp--live">
+          <span class="pulse" aria-hidden="true"></span>
+          Live Feed
+        </span>
+        <span class="stamp stamp--blood">04 Works</span>
+      </div>
+
+      <h1 class="masthead__name" data-text="Pishias">
         <span class="masthead__first">Antonis</span>
         <span class="masthead__last"><em>Pishias</em></span>
       </h1>
@@ -99,6 +130,10 @@
           <dt>Focus</dt>
           <dd>Volatility · Tooling · Play</dd>
         </div>
+        <div>
+          <dt>Status</dt>
+          <dd>Shipping</dd>
+        </div>
       </dl>
 
       <span class="corner corner--tl">◸</span>
@@ -107,18 +142,18 @@
       <span class="corner corner--br">◿</span>
     </header>
 
-    <!-- ========== Projects ========== -->
+    <!-- projects -->
     <section class="projects-section">
       <div class="section-head">
         <span class="section-head__label">Index</span>
-        <h2>Selected Work</h2>
+        <h2>Selected <em>Works</em></h2>
         <span class="section-head__count">04 / 04</span>
       </div>
 
       <div class="projects">
 
         <!-- 01 · JMBLD -->
-        <article class="card card--01">
+        <article class="card card--01" style="--i:0">
           <header class="card__head">
             <span class="card__index" data-index="01">01</span>
             <span class="card__tag">Game · Elixir</span>
@@ -126,6 +161,11 @@
           <h3>JMBLD</h3>
           <p class="card__lede">A single / multi-player word puzzle.</p>
           <p>You are presented with a board of 25 letters — 5 per word — and tasked to find the words in a limited number of moves.</p>
+          <ul class="card__chips">
+            <li>Phoenix</li>
+            <li>LiveView</li>
+            <li>Ecto</li>
+          </ul>
           <p class="card__note">Shipped on Phoenix / Elixir</p>
           <a class="btn btn--ghost" href="https://JMBLD.fun" target="_blank" rel="noopener noreferrer">
             <span>Play live</span>
@@ -134,16 +174,21 @@
         </article>
 
         <!-- 02 · Groove Grind -->
-        <article class="card card--02">
+        <article class="card card--02" style="--i:1">
           <header class="card__head">
             <span class="card__index" data-index="02">02</span>
             <span class="card__tag">API · Music</span>
           </header>
-          <h3>Groove Grind</h3>
+          <h3>Groove<br />Grind</h3>
           <p class="card__lede">
             Beatport's API, reimagined for <span class="accent-serif">crate diggers</span>.
           </p>
           <p>Explore an artist's releases chronologically — focused on which labels shaped their catalogue.</p>
+          <ul class="card__chips">
+            <li>Beatport</li>
+            <li>Reverse-engineered</li>
+            <li>Labels</li>
+          </ul>
           <p class="card__note">Reverse-engineered the Beatport API</p>
           <a class="btn btn--ghost" href="https://groove-grind.azurewebsites.net/" target="_blank" rel="noopener noreferrer">
             <span>Visit</span>
@@ -152,19 +197,20 @@
         </article>
 
         <!-- 03 · Queens Solver -->
-        <article class="card card--03">
+        <article class="card card--03" style="--i:2">
           <header class="card__head">
             <span class="card__index" data-index="03">03</span>
             <span class="card__tag">ML · Vision</span>
           </header>
-          <h3>Queens Solver</h3>
+          <h3>Queens<br />Solver</h3>
           <p class="card__lede">
             Upload an empty <span class="accent-serif">Queens</span> board — receive a solved board.
           </p>
 
           <figure class="card__media">
             <img id="previewImage" alt="Preview of an empty Queens puzzle board" src="assets/queens.jpeg" />
-            <figcaption>Sample</figcaption>
+            <figcaption>Sample · 08×08</figcaption>
+            <span class="card__media-mark">EXH. A</span>
           </figure>
 
           <div class="stack">
@@ -181,13 +227,18 @@
           </div>
         </article>
 
-        <!-- 04 · Volatility Surface -->
-        <article class="card card--04">
+        <!-- 04 · Vol Surface -->
+        <article class="card card--04" style="--i:3">
+          <div class="terminal-bar" aria-hidden="true">
+            <span class="terminal-bar__dots"><i></i><i></i><i></i></span>
+            <span class="terminal-bar__title">VOL-SURFACE · /session/001</span>
+            <span class="terminal-bar__meta">[ RUN ]</span>
+          </div>
           <header class="card__head">
             <span class="card__index" data-index="04">04</span>
             <span class="card__tag">Quant · Options</span>
           </header>
-          <h3>Vol Surface</h3>
+          <h3>Vol<br />Surface</h3>
           <p class="card__lede">
             Plot an options <span class="accent-serif">volatility surface</span> for any liquid ticker.
           </p>
@@ -213,10 +264,13 @@
       </div>
     </section>
 
-    <!-- ========== Colophon ========== -->
+    <!-- colophon -->
     <footer class="colophon">
-      <div class="colophon__marks" aria-hidden="true">
-        <span>◼</span><span>◼</span><span>◼</span><span>◼</span>
+      <div class="colophon__left">
+        <div class="colophon__marks" aria-hidden="true">
+          <span>◼</span><span>◼</span><span>◼</span><span>◼</span>
+        </div>
+        <p class="colophon__sig">— End of transmission —</p>
       </div>
       <div class="colophon__text">
         <p>© MMXXVI — Antonis Pishias. Shipped on GitHub Pages.</p>
@@ -229,7 +283,32 @@
 
   </main>
 
-  <!-- ========== Scripts ========== -->
+  <!-- bottom ticker (reverse) -->
+  <div class="ticker ticker--bottom" aria-hidden="true">
+    <div class="ticker__track ticker__track--reverse">
+      <span>Shipping</span><span class="ticker__sep">◆</span>
+      <span>Elixir</span><span class="ticker__sep">·</span>
+      <span>Python</span><span class="ticker__sep">·</span>
+      <span>JavaScript</span><span class="ticker__sep">·</span>
+      <span>Azure</span><span class="ticker__sep">·</span>
+      <span>Phoenix</span><span class="ticker__sep">◆</span>
+      <span>Think · Ship · Iterate</span><span class="ticker__sep">◆</span>
+      <span>Open to work</span><span class="ticker__sep">·</span>
+      <span>pishias92@gmail.com</span><span class="ticker__sep">◆</span>
+    </div>
+    <div class="ticker__track ticker__track--reverse" aria-hidden="true">
+      <span>Shipping</span><span class="ticker__sep">◆</span>
+      <span>Elixir</span><span class="ticker__sep">·</span>
+      <span>Python</span><span class="ticker__sep">·</span>
+      <span>JavaScript</span><span class="ticker__sep">·</span>
+      <span>Azure</span><span class="ticker__sep">·</span>
+      <span>Phoenix</span><span class="ticker__sep">◆</span>
+      <span>Think · Ship · Iterate</span><span class="ticker__sep">◆</span>
+      <span>Open to work</span><span class="ticker__sep">·</span>
+      <span>pishias92@gmail.com</span><span class="ticker__sep">◆</span>
+    </div>
+  </div>
+
   <script src="assets/main.js"></script>
 
 </body>

@@ -6,6 +6,37 @@ window.CONFIG = {
 // Track last created object URL so we can revoke it when replaced
 let _lastResultObjectUrl = null;
 
+// ---- HUD clock (UTC, HH:MM:SS) ----
+(function initClock() {
+  const el = document.getElementById("clock");
+  if (!el) return;
+  const pad = (n) => String(n).padStart(2, "0");
+  const tick = () => {
+    const d = new Date();
+    el.textContent = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`;
+  };
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// ---- Scroll progress bar ----
+(function initProgress() {
+  const el = document.getElementById("progressBar");
+  if (!el) return;
+  let raf = 0;
+  const update = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    el.style.setProperty("--p", p.toFixed(2) + "%");
+    raf = 0;
+  };
+  window.addEventListener("scroll", () => {
+    if (!raf) raf = requestAnimationFrame(update);
+  }, { passive: true });
+  update();
+})();
+
 // // Set an example volatility-surface iframe on page load (example: TSLA)
 // document.addEventListener("DOMContentLoaded", function () {
 //   const AZURE_KEY = window.CONFIG.VOL_AZURE_API_KEY;
