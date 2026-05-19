@@ -61,14 +61,45 @@ jobs:
       contents: read
       pages: write
       id-token: write
+    env:
+      ELECTIONS_BASE_PATH: /cyprus-parliamentary-elections-2026
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Inject Azure API keys
         run: |
           sed -i "s|__QUEENS_AZURE_API_KEY__|${{ vars.QUEENS_AZURE_API_KEY }}|g" assets/main.js
           sed -i "s|__VOL_AZURE_API_KEY__|${{ vars.VOL_AZURE_API_KEY }}|g" assets/main.js
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: cyprus-parliamentary-elections-2026/package-lock.json
+
+      - name: Install elections deps
+        working-directory: cyprus-parliamentary-elections-2026
+        run: npm ci
+
+      - name: Build elections
+        working-directory: cyprus-parliamentary-elections-2026
+        env:
+          BASE_PATH: ${{ env.ELECTIONS_BASE_PATH }}
+        run: npm run build
+
+      - name: Stage elections build at published path
+        run: |
+          # Replace the source checkout with just the build output so the
+          # uploaded artifact only contains static assets, not source.
+          mv cyprus-parliamentary-elections-2026/build /tmp/elections-build
+          rm -rf cyprus-parliamentary-elections-2026
+          mv /tmp/elections-build cyprus-parliamentary-elections-2026
+          # SvelteKit emits _app/ which Jekyll would strip — disable Jekyll.
+          touch .nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -43,11 +43,11 @@ class TestMasthead:
         assert first is not None and first.get_text(strip=True) == "Antonis"
         assert last is not None and last.get_text(strip=True) == "Pishias"
 
-    def test_has_three_spec_items(self, soup: BeautifulSoup) -> None:
+    def test_has_expected_spec_items(self, soup: BeautifulSoup) -> None:
         specs = soup.select(".masthead__specs > div")
-        assert len(specs) == 3
+        assert len(specs) == 4
         labels = {s.find("dt").get_text(strip=True) for s in specs}
-        assert labels == {"Base", "Stack", "Focus"}
+        assert labels == {"Base", "Stack", "Focus", "Status"}
 
     def test_has_stamp_badges(self, soup: BeautifulSoup) -> None:
         stamps = soup.select(".masthead__meta .stamp")
@@ -70,13 +70,13 @@ class TestTicker:
 
 
 class TestProjects:
-    def test_exactly_four_cards(self, soup: BeautifulSoup) -> None:
+    def test_exactly_five_cards(self, soup: BeautifulSoup) -> None:
         cards = soup.select(".projects .card")
-        assert len(cards) == 4
+        assert len(cards) == 5
 
     def test_cards_numbered_in_order(self, soup: BeautifulSoup) -> None:
         nums = [c.get_text(strip=True) for c in soup.select(".card__index")]
-        assert nums == ["01", "02", "03", "04"]
+        assert nums == ["01", "02", "03", "04", "05"]
 
     def test_each_card_has_heading_and_tag(self, soup: BeautifulSoup) -> None:
         for card in soup.select(".projects .card"):
