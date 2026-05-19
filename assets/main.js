@@ -1,3 +1,19 @@
+// ---- Sticker intersection trigger ----
+(function initStickerObserver() {
+  const card = document.querySelector(".card--featured");
+  if (!card) return;
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        card.classList.add("is-visible");
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+  observer.observe(card);
+})();
+
 window.CONFIG = {
   QUEENS_AZURE_API_KEY: "__QUEENS_AZURE_API_KEY__",
   VOL_AZURE_API_KEY: "__VOL_AZURE_API_KEY__"
