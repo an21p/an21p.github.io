@@ -1,17 +1,17 @@
-// ---- Sticker intersection trigger ----
-(function initStickerObserver() {
-  const card = document.querySelector(".card--featured");
-  if (!card) return;
+// ---- Card visibility trigger (sticker + tag animations) ----
+(function initCardObserver() {
   const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        card.classList.add("is-visible");
-        observer.disconnect();
-      }
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
     },
-    { threshold: 0.25 }
+    { threshold: 0.2 }
   );
-  observer.observe(card);
+  document.querySelectorAll(".card").forEach((card) => observer.observe(card));
 })();
 
 window.CONFIG = {

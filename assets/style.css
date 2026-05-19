@@ -365,15 +365,16 @@ a {
   font-size: 10.5px;
   font-weight: 700;
   background: var(--bone);
-  transform: rotate(-1deg);
+  transform: rotate(var(--s-rot, -1deg));
   white-space: nowrap;
   box-shadow: 3px 3px 0 var(--ink);
+  animation: sticker-heavy-drop 0.5s cubic-bezier(.25, .55, .35, 1) both;
 }
 
-.stamp--ink   { background: var(--bone); transform: rotate(-1.4deg); }
-.stamp--volt  { background: var(--volt); transform: rotate(1.4deg); }
-.stamp--live  { background: var(--ink); color: var(--bone); transform: rotate(-0.4deg); }
-.stamp--blood { background: var(--blood); color: var(--bone); transform: rotate(1deg); }
+.stamp--ink   { --s-rot: -1.4deg; background: var(--bone); animation-delay: 0.85s; }
+.stamp--volt  { --s-rot:  1.4deg; background: var(--volt); animation-delay: 1.0s; }
+.stamp--live  { --s-rot: -0.4deg; background: var(--ink); color: var(--bone); animation-delay: 1.15s; }
+.stamp--blood { --s-rot:  1deg;   background: var(--blood); color: var(--bone); animation-delay: 1.3s; }
 
 .pulse {
   width: 8px;
@@ -640,6 +641,13 @@ a {
   z-index: -1;
 }
 
+.card__tags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
 .card__tag {
   display: inline-block;
   border: 2px solid var(--ink);
@@ -649,9 +657,23 @@ a {
   text-transform: uppercase;
   font-weight: 700;
   background: var(--bone);
-  transform: rotate(2.5deg);
+  --s-rot: 2.5deg;
+  transform: rotate(var(--s-rot));
   white-space: nowrap;
   box-shadow: 3px 3px 0 var(--ink);
+  opacity: 0;
+}
+
+.card__tag + .card__tag {
+  --s-rot: -1.8deg;
+}
+
+.card.is-visible .card__tag {
+  animation: sticker-heavy-drop 0.5s cubic-bezier(.25, .55, .35, 1) 0.28s both;
+}
+
+.card.is-visible .card__tag + .card__tag {
+  animation-delay: 0.46s;
 }
 
 .card h3 {
@@ -1194,12 +1216,21 @@ iframe {
   50%       { box-shadow: var(--shadow-lg), 0 0 0 6px rgba(214, 251, 79, 0.35); }
 }
 
+@keyframes sticker-heavy-drop {
+  0%   { transform: rotate(var(--s-rot, 0deg)) translateY(-68px); opacity: 0; }
+  68%  { transform: rotate(var(--s-rot, 0deg)) translateY(7px);   opacity: 1; }
+  84%  { transform: rotate(var(--s-rot, 0deg)) translateY(-1px); }
+  100% { transform: rotate(var(--s-rot, 0deg)) translateY(0);    opacity: 1; }
+}
+
 @keyframes sticker-land {
-  0%   { transform: rotate(-12deg) translateY(-90px) scale(1.4); opacity: 0; }
-  55%  { transform: rotate(4deg)   translateY(7px)   scale(0.96); opacity: 1; }
-  72%  { transform: rotate(-2deg)  translateY(-3px)  scale(1.01); }
-  86%  { transform: rotate(3deg)   translateY(1px); }
-  100% { transform: rotate(-3deg)  translateY(0)     scale(1); opacity: 1; }
+  0%   { transform: rotate(-14deg) translateY(-100px) scale(1.5); opacity: 0; }
+  44%  { transform: rotate(7deg)   translateY(12px)   scale(0.91); opacity: 1; }
+  58%  { transform: rotate(-5deg)  translateY(-11px)  scale(1.07); }
+  70%  { transform: rotate(4deg)   translateY(5px); }
+  81%  { transform: rotate(-3deg)  translateY(-4px); }
+  90%  { transform: rotate(2deg)   translateY(2px); }
+  100% { transform: rotate(-3deg)  translateY(0)    scale(1); opacity: 1; }
 }
 
 .card--featured {
@@ -1295,7 +1326,7 @@ iframe {
 }
 
 .card--featured.is-visible .card__sticker {
-  animation: sticker-land 0.65s cubic-bezier(.2, .7, .3, 1.4) 0.3s both;
+  animation: sticker-land 0.65s cubic-bezier(.2, .7, .3, 1.4) 0.95s both;
 }
 
 /* ---------- Entrance animation ---------- */
