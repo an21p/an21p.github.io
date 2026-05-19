@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#ece6d6"/>
+  <g transform="translate(56 56) scale(0.78125)">
+    <image href="icon.svg" width="512" height="512"/>
+  </g>
+</svg>

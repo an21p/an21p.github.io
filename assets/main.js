@@ -162,3 +162,20 @@ function updateIframe() {
     visitLink.style.display = '';
   }
 }
+
+/* ---------- Service Worker registration ---------- */
+(function registerServiceWorker() {
+  try {
+    if (!('serviceWorker' in navigator)) return;
+    const proto = window.location.protocol;
+    const host = window.location.hostname;
+    const isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+    if (proto !== 'https:' && !isLocalhost) return;
+
+    window.addEventListener('load', function () {
+      try {
+        navigator.serviceWorker.register('/sw.js').catch(function () { /* silent */ });
+      } catch (_) { /* silent */ }
+    });
+  } catch (_) { /* silent */ }
+})();

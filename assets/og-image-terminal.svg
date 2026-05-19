@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- page bone background -->
+  <rect width="1200" height="630" fill="#ece6d6"/>
+
+  <!-- terminal window -->
+  <g>
+    <!-- hard offset shadow, site style -->
+    <rect x="74" y="79" width="1060" height="492" rx="0" fill="#0b0b0b"/>
+    <!-- window body -->
+    <rect x="60" y="65" width="1060" height="492" rx="0" fill="#f3eedd" stroke="#0b0b0b" stroke-width="3"/>
+
+    <!-- title bar -->
+    <rect x="60" y="65" width="1060" height="44" fill="#e1dac6" stroke="#0b0b0b" stroke-width="3"/>
+
+    <!-- traffic lights (page palette: blood, volt-dark, volt) -->
+    <circle cx="92"  cy="87" r="8" fill="#e8412a" stroke="#0b0b0b" stroke-width="2"/>
+    <circle cx="118" cy="87" r="8" fill="#b8d940" stroke="#0b0b0b" stroke-width="2"/>
+    <circle cx="144" cy="87" r="8" fill="#d6fb4f" stroke="#0b0b0b" stroke-width="2"/>
+
+    <!-- tab title -->
+    <text x="590" y="93"
+          font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace"
+          font-size="18" fill="#0b0b0b" text-anchor="middle">— zsh — an21p — 96×24 —</text>
+
+    <!-- terminal content -->
+    <g font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="26">
+      <text x="100" y="170"><tspan fill="#0b0b0b">antonis</tspan><tspan fill="#1c1c1c">@</tspan><tspan fill="#0b0b0b">console</tspan><tspan fill="#1c1c1c">:</tspan><tspan fill="#e8412a">~/an21p</tspan><tspan fill="#0b0b0b" xml:space="preserve"> $ </tspan><tspan fill="#0b0b0b">whoami</tspan></text>
+
+      <text x="100" y="220" fill="#0b0b0b">antonis pishias — quant developer</text>
+
+      <text x="100" y="280"><tspan fill="#0b0b0b">antonis</tspan><tspan fill="#1c1c1c">@</tspan><tspan fill="#0b0b0b">console</tspan><tspan fill="#1c1c1c">:</tspan><tspan fill="#e8412a">~/an21p</tspan><tspan fill="#0b0b0b" xml:space="preserve"> $ </tspan><tspan fill="#0b0b0b">cat stack.md</tspan></text>
+
+      <g fill="#0b0b0b">
+        <text x="100" y="320"><tspan fill="#e8412a">◆</tspan>  quant · games · apis · experiments · web</text>
+        <text x="100" y="358"><tspan fill="#e8412a">◆</tspan>  alpha · beta · gamma · theta · vega · rho</text>
+        <text x="100" y="396"><tspan fill="#e8412a">◆</tspan>  console · mmxxvi</text>
+      </g>
+
+      <text x="100" y="466"><tspan fill="#0b0b0b">antonis</tspan><tspan fill="#1c1c1c">@</tspan><tspan fill="#0b0b0b">console</tspan><tspan fill="#1c1c1c">:</tspan><tspan fill="#e8412a">~/an21p</tspan><tspan fill="#0b0b0b" xml:space="preserve"> $ </tspan><tspan fill="#0b0b0b" xml:space="preserve">open </tspan><tspan fill="#0b0b0b" font-weight="700" text-decoration="underline">https://an21p.github.io</tspan></text>
+      <!-- volt cursor block at end of URL -->
+      <rect x="952" y="444" width="14" height="28" fill="#d6fb4f" stroke="#0b0b0b" stroke-width="2"/>
+    </g>
+
+    <!-- footer strip inside window -->
+    <line x1="60" y1="520" x2="1120" y2="520" stroke="#0b0b0b" stroke-width="2"/>
+    <g font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" fill="#0b0b0b">
+      <text x="92" y="548">an21p.github.io</text>
+      <text x="1088" y="548" text-anchor="end">α · mmxxvi</text>
+    </g>
+  </g>
+</svg>
