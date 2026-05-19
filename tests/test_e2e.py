@@ -47,7 +47,7 @@ def test_page_has_expected_title_and_masthead(live_server: str, page: Page) -> N
 
 def test_renders_five_project_cards(live_server: str, page: Page) -> None:
     page.goto(live_server)
-    expect(page.locator(".projects .card")).to_have_count(5)
+    expect(page.locator(".projects-section .projects .card")).to_have_count(5)
 
 
 def test_ticker_is_visible(live_server: str, page: Page) -> None:
