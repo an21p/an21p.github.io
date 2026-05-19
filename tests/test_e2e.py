@@ -52,7 +52,7 @@ def test_renders_five_project_cards(live_server: str, page: Page) -> None:
 
 def test_ticker_is_visible(live_server: str, page: Page) -> None:
     page.goto(live_server)
-    expect(page.locator(".ticker__track")).to_be_visible()
+    expect(page.locator(".ticker__track").first).to_be_visible()
 
 
 def test_render_surface_updates_iframe_with_uppercased_ticker(
