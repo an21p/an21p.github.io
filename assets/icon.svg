@@ -1,23 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- bone page background -->
   <rect width="512" height="512" fill="#ece6d6"/>
-
-  <!-- terminal window: hard offset shadow + body -->
-  <rect x="56" y="92" width="416" height="372" fill="#0b0b0b"/>
-  <rect x="44" y="80" width="416" height="372" fill="#f3eedd" stroke="#0b0b0b" stroke-width="6"/>
-
-  <!-- title bar -->
-  <rect x="44" y="80" width="416" height="46" fill="#e1dac6" stroke="#0b0b0b" stroke-width="6"/>
-  <!-- traffic lights: blood, volt-dark, volt -->
-  <circle cx="76"  cy="103" r="9" fill="#e8412a" stroke="#0b0b0b" stroke-width="3"/>
-  <circle cx="104" cy="103" r="9" fill="#b8d940" stroke="#0b0b0b" stroke-width="3"/>
-  <circle cx="132" cy="103" r="9" fill="#d6fb4f" stroke="#0b0b0b" stroke-width="3"/>
-
-  <!-- π glyph (SF Mono, weight 700, outlined) -->
-  <g transform="translate(109.137 405.898) scale(0.17578 -0.17578)">
+  <g transform="translate(76 460) scale(0.2915 -0.2915)">
     <path fill="#0b0b0b" d="M232.78759765625 0H489.00592041015625V874.6282958984375H767.9409790039062V281.177001953125Q767.9409790039062 133.43658447265625 832.8421630859375 61.718292236328125Q897.7433471679688 -10 1038.8849487304688 -10Q1072.5988159179688 -10 1111.4955749511719 -5.49114990234375Q1150.392333984375 -0.9822998046875 1173.7669677734375 6.6961669921875V209.7640380859375Q1141.427734375 201.75518798828125 1116.4188842773438 201.75518798828125Q1063.1239013671875 201.75518798828125 1043.6416015625 227.23306274414062Q1024.1593017578125 252.7109375 1024.1593017578125 310.63128662109375V874.6282958984375H1235.5162353515625V1101.106201171875H25.8583984375V874.6282958984375H232.78759765625Z"/>
   </g>
-
-  <!-- volt cursor block, like the OG image -->
-  <rect x="342.32" y="212.34" width="34" height="195.31" fill="#d6fb4f" stroke="#0b0b0b" stroke-width="4"/>
 </svg>

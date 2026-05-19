@@ -1,5 +1,5 @@
 /* an21p — minimal service worker */
-const CACHE_NAME = 'an21p-v1';
+const CACHE_NAME = 'an21p-v2';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
