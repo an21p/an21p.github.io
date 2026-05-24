@@ -1471,6 +1471,15 @@ iframe {
   background: rgba(0, 0, 0, 0.05);
 }
 
+/* On mobile, drop the dates below the company name. */
+@media (max-width: 640px) {
+  .xp__line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
 /* ---------- Entrance animation ---------- */
 @keyframes rise {
   from {
