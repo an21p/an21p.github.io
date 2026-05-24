@@ -1353,6 +1353,124 @@ iframe {
   animation: sticker-land 0.65s cubic-bezier(.2, .7, .3, 1.4) 0.95s both;
 }
 
+/* ---------- Experience / Work History ---------- */
+/* Rows at every breakpoint: logo column never collapses under the body. */
+.experience {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.xp {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 26px);
+  border: var(--line-thick);
+  background: var(--bone-2);
+  box-shadow: var(--shadow);
+  padding: clamp(14px, 2vw, 22px);
+  transition:
+    transform 0.2s cubic-bezier(.2, .7, .3, 1.2),
+    box-shadow 0.2s cubic-bezier(.2, .7, .3, 1.2);
+  animation: rise 0.8s cubic-bezier(.2, .7, .2, 1) backwards;
+  animation-delay: calc(0.2s + var(--i, 0) * 0.07s);
+}
+
+.xp:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.xp__logo {
+  width: clamp(54px, 9vw, 78px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 2.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  overflow: hidden;
+}
+
+.xp__logo img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  display: block;
+}
+
+.xp__logo--mono {
+  background: var(--volt);
+}
+
+.xp__logo--mono span {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(26px, 4.5vw, 42px);
+  line-height: 1;
+  color: var(--ink);
+}
+
+.xp__body {
+  min-width: 0;
+}
+
+.xp__line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 14px;
+}
+
+.xp__company {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(22px, 3.4vw, 34px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.xp__dates {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border: 2px solid var(--ink);
+  background: var(--bone);
+}
+
+.xp__role {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.4vw, 13px);
+  letter-spacing: 0.04em;
+  margin: 6px 0 11px;
+  opacity: 0.82;
+}
+
+.xp__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.xp__tags li {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border: 1.5px solid var(--ink);
+  background: rgba(0, 0, 0, 0.05);
+}
+
 /* ---------- Entrance animation ---------- */
 @keyframes rise {
   from {
