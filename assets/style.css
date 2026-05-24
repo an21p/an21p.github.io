@@ -64,6 +64,21 @@ input {
 
   --ticker-h: 38px;
   --hud-h: 32px;
+
+  /* JMBLD theme — matches jmbld.fun */
+  --jmbld-deep:   #14102b;
+  --jmbld-purple: #2d1f56;
+  --jmbld-violet: #b0b8e8;
+  --jmbld-lav:    #c9b8ff;
+  --jmbld-text:   #e3d8ff;
+  --jmbld-green:  #3ee090;
+  --jmbld-green-2:#1f9e60;
+
+  /* Artefekt theme — matches artefekt.uk */
+  --afk-black:  #0a0a09;
+  --afk-cream:  #f4f1ea;
+  --afk-yellow: #f5cb2e;
+  --afk-mute:   #8a8780;
 }
 
 html {
@@ -791,18 +806,64 @@ a {
 }
 
 /* ---------- Card variants ---------- */
-/* 01 — JMBLD: hatched paper, volt tag */
+/* 01 — JMBLD: deep purple wash matching jmbld.fun */
 .card--01 {
   --tilt: -0.4deg;
-  background:
-    linear-gradient(var(--paper), var(--paper)),
-    repeating-linear-gradient(-45deg,
-      transparent 0 22px,
-      rgba(0, 0, 0, 0.05) 22px 23px);
-  background-blend-mode: multiply;
+  background: var(--jmbld-deep);
+  color: var(--jmbld-text);
+  border-color: var(--ink);
+  background-image:
+    linear-gradient(155deg, var(--jmbld-purple), var(--jmbld-deep)),
+    repeating-linear-gradient(0deg,
+      transparent 0 24px, rgba(176, 184, 232, 0.07) 24px 25px),
+    repeating-linear-gradient(90deg,
+      transparent 0 24px, rgba(176, 184, 232, 0.07) 24px 25px);
+  background-blend-mode: normal, screen, screen;
 }
 
-.card--01 .card__tag { background: var(--volt); }
+.card--01 h3,
+.card--01 .card__index {
+  color: var(--jmbld-lav);
+}
+
+.card--01 .card__index::after {
+  -webkit-text-stroke-color: var(--jmbld-lav);
+}
+
+.card--01 .card__tag {
+  background: var(--jmbld-lav);
+  color: var(--jmbld-deep);
+  border-color: var(--jmbld-lav);
+}
+
+.card--01 .card__chips li {
+  background: linear-gradient(180deg, var(--jmbld-green), var(--jmbld-green-2));
+  color: var(--jmbld-deep);
+  border-color: var(--jmbld-green-2);
+  box-shadow: 0 2px 0 #14693e;
+}
+
+.card--01 .card__note {
+  border-top-color: var(--jmbld-violet);
+  opacity: 0.75;
+}
+
+.card--01 .btn--ghost {
+  background: transparent;
+  color: var(--jmbld-text);
+  border-color: var(--jmbld-violet);
+  box-shadow: 6px 6px 0 rgba(176, 184, 232, 0.35);
+}
+
+.card--01 .btn--ghost:hover {
+  background: var(--jmbld-lav);
+  color: var(--jmbld-deep);
+  border-color: var(--jmbld-lav);
+}
+
+.card--01 .btn--ghost .btn__arrow {
+  color: var(--jmbld-lav);
+}
 
 /* 02 — Groove Grind: full chartreuse wash */
 .card--02 {
@@ -846,10 +907,21 @@ a {
   -webkit-text-stroke-color: var(--blood);
 }
 
-/* 04 — Vol Surface: narrow terminal */
+/* 05 — Vol Surface: light card (alternates with Artefekt + Cyprus) */
 .card--04 {
-  grid-column: span 5;
+  grid-column: span 6;
   --tilt: -0.3deg;
+}
+
+/* keep the rendered surface dark inside its light card */
+.card--04 iframe {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* 06 — Cyprus: dark wash (alternates with Vol Surface) */
+.card--05 {
+  --tilt: 0.4deg;
   background: var(--ink);
   color: var(--bone);
   border-color: var(--ink);
@@ -862,98 +934,103 @@ a {
   background-blend-mode: normal, screen, screen;
 }
 
-.card--04 h3,
-.card--04 .card__index {
+.card--05 h3,
+.card--05 .card__index {
   color: var(--volt);
 }
 
-.card--04 .card__index::after {
+.card--05 .card__index::after {
   -webkit-text-stroke-color: var(--volt);
 }
 
-.card--04 .card__tag {
+.card--05 .card__tag {
   background: var(--volt);
   color: var(--ink);
   border-color: var(--volt);
 }
 
-.card--04 .card__chips li {
+.card--05 .card__chips li {
   background: transparent;
   color: var(--bone);
   border-color: var(--bone);
 }
 
-.card--04 .card__note {
+.card--05 .card__note {
   border-top-color: var(--bone);
   opacity: 0.7;
 }
 
-.card--04 input[type="text"] {
-  background: var(--ink-soft);
-  color: var(--bone);
-  border-color: var(--bone);
-}
-
-.card--04 input[type="text"]:focus {
-  outline-color: var(--volt);
-}
-
-.card--04 .btn {
-  background: var(--volt);
-  color: var(--ink);
-  border-color: var(--volt);
-  box-shadow: 6px 6px 0 var(--bone);
-}
-
-.card--04 .btn:hover {
-  box-shadow: 2px 2px 0 var(--bone);
-}
-
-.card--04 iframe {
-  background: var(--ink-soft);
-  border-color: var(--bone);
-}
-
-.card--04 .btn--ghost {
+.card--05 .btn--ghost {
   background: transparent;
   color: var(--bone);
   border-color: var(--bone);
   box-shadow: none;
 }
 
-.card--04 .btn--ghost:hover {
+.card--05 .btn--ghost:hover {
   background: var(--volt);
   color: var(--ink);
   border-color: var(--volt);
 }
 
-.card--04 .field__label {
-  color: var(--bone);
-  opacity: 0.75;
-}
-
-/* 06 — Artefekt: full chartreuse wash (matches 02) */
+/* Artefekt (shown as 04) — black + cream, yellow accent, matches artefekt.uk */
 .card--06 {
+  grid-column: span 5;
   --tilt: 0.5deg;
-  background: var(--volt);
-  background-image:
-    radial-gradient(circle at 12% 8%, rgba(0,0,0,0.06) 0 1px, transparent 1.5px);
-  background-size: 18px 18px;
-}
-
-.card--06 .card__tag {
-  background: var(--ink);
-  color: var(--volt);
+  background: var(--afk-black);
+  color: var(--afk-cream);
   border-color: var(--ink);
 }
 
+.card--06 h3 {
+  color: var(--afk-cream);
+}
+
+.card--06 .card__index {
+  color: var(--afk-yellow);
+}
+
+.card--06 .card__index::after {
+  -webkit-text-stroke-color: var(--afk-yellow);
+}
+
+.card--06 .accent-serif {
+  color: var(--afk-yellow);
+}
+
+.card--06 .card__tag {
+  background: var(--afk-yellow);
+  color: var(--afk-black);
+  border-color: var(--afk-yellow);
+}
+
 .card--06 .card__chips li {
-  background: rgba(0,0,0,0.06);
+  background: transparent;
+  color: var(--afk-cream);
+  border-color: var(--afk-mute);
 }
 
 .card--06 .card__note {
-  border-top-color: var(--ink);
-  opacity: 0.7;
+  border-top-color: var(--afk-mute);
+  color: var(--afk-mute);
+  opacity: 1;
+}
+
+.card--06 .btn--ghost {
+  background: transparent;
+  color: var(--afk-yellow);
+  border-color: var(--afk-yellow);
+  box-shadow: 6px 6px 0 rgba(245, 203, 46, 0.3);
+}
+
+.card--06 .btn--ghost:hover {
+  background: var(--afk-yellow);
+  color: var(--afk-black);
+  border-color: var(--afk-yellow);
+}
+
+.card--06 .btn--ghost .btn__arrow {
+  color: var(--afk-yellow);
 }
 
 /* terminal chrome on vol-surface card */
@@ -962,9 +1039,9 @@ a {
   align-items: center;
   flex-wrap: nowrap;
   gap: 12px;
-  background: var(--bone);
-  color: var(--ink);
-  border: 2px solid var(--bone);
+  background: var(--ink);
+  color: var(--bone);
+  border: 2px solid var(--ink);
   padding: 6px 10px;
   font-family: var(--font-mono);
   font-size: 10px;
@@ -988,7 +1065,7 @@ a {
 
 .terminal-bar__dots i:nth-child(1) { background: var(--blood); }
 .terminal-bar__dots i:nth-child(2) { background: var(--volt); }
-.terminal-bar__dots i:nth-child(3) { background: var(--ink); }
+.terminal-bar__dots i:nth-child(3) { background: var(--bone); }
 
 /* Shrink the terminal bar so the full title fits on small screens. */
 @media (max-width: 600px) {
@@ -1016,7 +1093,7 @@ a {
   flex: 0 0 auto;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 760px) {
   .card,
   .card--03,
   .card--04 {
