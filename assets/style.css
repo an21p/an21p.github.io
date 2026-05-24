@@ -180,11 +180,6 @@ a {
   animation: ticker-scroll 55s linear infinite;
 }
 
-.ticker--bottom .ticker__rail {
-  animation-direction: reverse;
-  animation-duration: 48s;
-}
-
 .ticker__track span {
   display: inline-block;
 }
