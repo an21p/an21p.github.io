@@ -150,8 +150,8 @@ a {
   margin-top: 72px;
   border-top: var(--line-thick);
   border-bottom: 0;
-  background: var(--volt);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--bone);
 }
 
 .ticker__track {
@@ -193,7 +193,7 @@ a {
 }
 
 .ticker--bottom .ticker__sep {
-  color: var(--ink);
+  color: var(--volt);
 }
 
 @keyframes ticker-scroll {
