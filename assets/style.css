@@ -889,6 +889,13 @@ a {
   opacity: 0.7;
 }
 
+/* volt card: CTA hovers to ink so it stays visible */
+.card--02 .btn--ghost:hover {
+  background: var(--ink);
+  color: var(--volt);
+  border-color: var(--ink);
+}
+
 /* 03 — Queens: wider column, blood-accent */
 .card--03 {
   grid-column: span 7;
@@ -919,28 +926,28 @@ a {
   border-color: var(--ink);
 }
 
-/* 06 — Cyprus: dark wash (alternates with Vol Surface) */
+/* 06 — Cyprus: blue wash (same as the Latest / featured card) */
 .card--05 {
   --tilt: 0.4deg;
-  background: var(--ink);
+  background: var(--sky);
   color: var(--bone);
   border-color: var(--ink);
-  background-image:
-    linear-gradient(var(--ink), var(--ink)),
-    repeating-linear-gradient(0deg,
-      transparent 0 24px, rgba(214, 251, 79, 0.05) 24px 25px),
-    repeating-linear-gradient(90deg,
-      transparent 0 24px, rgba(214, 251, 79, 0.05) 24px 25px);
-  background-blend-mode: normal, screen, screen;
 }
 
-.card--05 h3,
+.card--05 h3 {
+  color: #fff;
+}
+
 .card--05 .card__index {
   color: var(--volt);
 }
 
 .card--05 .card__index::after {
   -webkit-text-stroke-color: var(--volt);
+}
+
+.card--05 .accent-serif {
+  color: var(--ink);
 }
 
 .card--05 .card__tag {
@@ -952,19 +959,19 @@ a {
 .card--05 .card__chips li {
   background: transparent;
   color: var(--bone);
-  border-color: var(--bone);
+  border-color: rgba(236, 230, 214, 0.4);
 }
 
 .card--05 .card__note {
-  border-top-color: var(--bone);
-  opacity: 0.7;
+  border-top-color: rgba(236, 230, 214, 0.5);
+  opacity: 0.85;
 }
 
 .card--05 .btn--ghost {
   background: transparent;
   color: var(--bone);
-  border-color: var(--bone);
-  box-shadow: none;
+  border-color: rgba(236, 230, 214, 0.6);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.35);
 }
 
 .card--05 .btn--ghost:hover {
@@ -973,64 +980,72 @@ a {
   border-color: var(--volt);
 }
 
-/* Artefekt (shown as 04) — black + cream, yellow accent, matches artefekt.uk */
+/* Artefekt (shown as 04) — artefekt.uk black bg, an21p volt-yellow text */
 .card--06 {
   grid-column: span 5;
   --tilt: 0.5deg;
   background: var(--afk-black);
-  color: var(--afk-cream);
+  color: var(--volt);
   border-color: var(--ink);
 }
 
-.card--06 h3 {
-  color: var(--afk-cream);
-}
-
+.card--06 h3,
 .card--06 .card__index {
-  color: var(--afk-yellow);
+  color: var(--volt);
 }
 
 .card--06 .card__index::after {
-  -webkit-text-stroke-color: var(--afk-yellow);
+  -webkit-text-stroke-color: var(--volt);
 }
 
 .card--06 .accent-serif {
-  color: var(--afk-yellow);
+  color: var(--volt);
 }
 
 .card--06 .card__tag {
-  background: var(--afk-yellow);
-  color: var(--afk-black);
-  border-color: var(--afk-yellow);
+  background: var(--volt);
+  color: var(--ink);
+  border-color: var(--volt);
 }
 
 .card--06 .card__chips li {
   background: transparent;
-  color: var(--afk-cream);
-  border-color: var(--afk-mute);
+  color: var(--volt);
+  border-color: var(--volt);
 }
 
 .card--06 .card__note {
-  border-top-color: var(--afk-mute);
-  color: var(--afk-mute);
-  opacity: 1;
+  border-top-color: var(--volt);
+  color: var(--volt);
+  opacity: 0.75;
 }
 
 .card--06 .btn--ghost {
   background: transparent;
-  color: var(--afk-yellow);
-  border-color: var(--afk-yellow);
-  box-shadow: 6px 6px 0 rgba(245, 203, 46, 0.3);
+  color: var(--volt);
+  border-color: var(--volt);
+  box-shadow: 6px 6px 0 rgba(214, 251, 79, 0.3);
 }
 
 .card--06 .btn--ghost:hover {
-  background: var(--afk-yellow);
-  color: var(--afk-black);
-  border-color: var(--afk-yellow);
+  background: var(--volt);
+  color: var(--ink);
+  border-color: var(--volt);
 }
 
 .card--06 .btn--ghost .btn__arrow {
-  color: var(--afk-yellow);
+  color: var(--volt);
+}
+
+/* Artefekt — embedded Spotify player (latest releases, same as artefekt.uk) */
+.card__spotify {
+  width: 100%;
+  height: 50%;
+  min-height: 232px;
+  border: 2px solid var(--volt);
+  border-radius: 12px;
+  margin: 4px 0 16px;
+  background: var(--afk-black);
 }
 
 /* terminal chrome on vol-surface card */
@@ -1250,6 +1265,9 @@ input[type="file"]::file-selector-button {
 .btn:hover {
   transform: translate(3px, 3px);
   box-shadow: 2px 2px 0 var(--ink);
+  background: var(--volt);
+  color: var(--ink);
+  border-color: var(--volt);
 }
 
 .btn:active {
@@ -1418,7 +1436,7 @@ iframe {
 }
 
 .card--featured h3 {
-  color: var(--bone);
+  color: #fff;
   font-size: clamp(40px, 5.5vw, 80px);
 }
 
