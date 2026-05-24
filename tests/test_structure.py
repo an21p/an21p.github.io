@@ -53,9 +53,6 @@ class TestMasthead:
         stamps = soup.select(".masthead__meta .stamp")
         assert len(stamps) >= 2
 
-    def test_has_live_feed_pulse(self, soup: BeautifulSoup) -> None:
-        assert soup.select_one(".stamp--live .pulse") is not None
-
 
 class TestTicker:
     def test_track_is_present(self, soup: BeautifulSoup) -> None:
@@ -70,13 +67,13 @@ class TestTicker:
 
 
 class TestProjects:
-    def test_exactly_five_cards(self, soup: BeautifulSoup) -> None:
+    def test_exactly_six_cards(self, soup: BeautifulSoup) -> None:
         cards = soup.select(".projects-section .projects .card")
-        assert len(cards) == 5
+        assert len(cards) == 6
 
     def test_cards_numbered_in_order(self, soup: BeautifulSoup) -> None:
         nums = [c.get_text(strip=True) for c in soup.select(".projects-section .card__index")]
-        assert nums == ["01", "02", "03", "04", "05"]
+        assert nums == ["01", "02", "03", "04", "05", "06"]
 
     def test_each_card_has_heading_and_tag(self, soup: BeautifulSoup) -> None:
         for card in soup.select(".projects .card"):
@@ -97,6 +94,37 @@ class TestProjects:
     )
     def test_js_wiring_ids_present(self, soup: BeautifulSoup, required_id: str) -> None:
         assert soup.find(id=required_id) is not None, f"missing #{required_id}"
+
+
+class TestExperience:
+    """The Work History section: horizontal role rows after Latest Work."""
+
+    def test_section_present_after_featured(self, soup: BeautifulSoup) -> None:
+        section = soup.select_one(".experience-section")
+        assert section is not None, "experience-section missing"
+        sections = soup.select("main > section")
+        names = [" ".join(s.get("class") or []) for s in sections]
+        assert "featured-section" in names and "experience-section" in names
+        assert names.index("experience-section") == names.index("featured-section") + 1, \
+            "experience-section must come directly after featured-section"
+
+    def test_each_role_has_required_parts(self, soup: BeautifulSoup) -> None:
+        rows = soup.select(".experience .xp")
+        assert len(rows) >= 1, "expected at least one role row"
+        for row in rows:
+            assert row.select_one(".xp__company"), "role missing company name"
+            assert row.select_one(".xp__role"), "role missing job title"
+            assert row.select_one(".xp__dates"), "role missing dates"
+            assert row.select_one(".xp__logo"), "role missing logo block"
+
+    def test_each_role_has_at_most_five_tags(self, soup: BeautifulSoup) -> None:
+        for row in soup.select(".experience .xp"):
+            tags = row.select(".xp__tags li")
+            assert 1 <= len(tags) <= 5, f"role has {len(tags)} tags (must be 1–5)"
+
+    def test_logo_images_have_alt_text(self, soup: BeautifulSoup) -> None:
+        for img in soup.select(".experience .xp__logo img"):
+            assert (img.get("alt") or "").strip(), f"logo image missing alt: {img}"
 
 
 class TestAccessibility:

@@ -105,6 +105,21 @@ jobs:
           # SvelteKit emits _app/ which Jekyll would strip — disable Jekyll.
           touch .nojekyll
 
+      - name: Cache-bust assets (content digest)
+        run: |
+          set -euo pipefail
+          # Append a short content hash to the CSS/JS URLs so browsers fetch
+          # the new file whenever its bytes change, but keep caching otherwise.
+          # Runs after the API-key injection so the JS digest matches deployed
+          # bytes. Only the published artifact is rewritten; source stays clean.
+          css_v=$(sha256sum assets/style.css | cut -c1-12)
+          js_v=$(sha256sum assets/main.js  | cut -c1-12)
+          sed -i "s#assets/style\.css#assets/style.css?v=${css_v}#g" index.html
+          sed -i "s#assets/main\.js#assets/main.js?v=${js_v}#g" index.html
+          echo "style.css -> ?v=${css_v}"
+          echo "main.js   -> ?v=${js_v}"
+          grep -nE 'assets/(style\.css|main\.js)\?v=' index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
