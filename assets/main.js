@@ -53,20 +53,6 @@ let _lastResultObjectUrl = null;
   update();
 })();
 
-// // Set an example volatility-surface iframe on page load (example: TSLA)
-// document.addEventListener("DOMContentLoaded", function () {
-//   const AZURE_KEY = window.CONFIG.VOL_AZURE_API_KEY;
-//   const iframe = document.getElementById("volIframe");
-//   const defaultSymbol = "TSLA";
-//
-//   const BASE_VOL_URL =
-//     "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
-//     AZURE_KEY +
-//     "&ticker=";
-//
-//   // Set the iframe src so an example is already requested on load
-//   iframe.src = BASE_VOL_URL + defaultSymbol;
-// });
 
 async function sendImage() {
   const AZURE_KEY = window.CONFIG.QUEENS_AZURE_API_KEY;
@@ -138,28 +124,6 @@ async function sendImage() {
         ? "CORS / NETWORK ERROR — CHECK SERVER ORIGIN"
         : "ERROR SENDING IMAGE";
     console.error(err);
-  }
-}
-
-function updateIframe() {
-  const AZURE_KEY = window.CONFIG.VOL_AZURE_API_KEY;
-  const input = document.getElementById("symbolInput");
-  const iframe = document.getElementById("volIframe");
-
-  if (!input.value.trim()) return;
-
-  const symbol = input.value.trim().toUpperCase();
-
-  const BASE_VOL_URL =
-    "https://volsurface.azurewebsites.net/api/volatility-surface?code=" +
-    AZURE_KEY +
-    "&ticker=";
-
-  iframe.src = BASE_VOL_URL + symbol;
-  const visitLink = document.getElementById('volVisitLink');
-  if (visitLink) {
-    visitLink.href = BASE_VOL_URL + symbol;
-    visitLink.style.display = '';
   }
 }
 

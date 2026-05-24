@@ -502,22 +502,17 @@
           </header>
           <h3>Vol<br />Surface</h3>
           <p class="card__lede">
-            Plot an options <span class="accent-serif">volatility surface</span> for any liquid ticker.
+            An options <span class="accent-serif">volatility surface</span> built from live option chains.
           </p>
-          <p>Type a symbol, render the surface.</p>
+          <p>An example surface for TSLA — strike skew and term structure at a glance.</p>
 
           <div class="stack">
-            <label class="field field--row">
-              <span class="field__label">Ticker</span>
-              <input type="text" id="symbolInput" placeholder="TSLA" value="TSLA" maxlength="8" />
-            </label>
-            <button class="btn" onclick="updateIframe()">
-              <span>Render surface</span>
-              <span class="btn__arrow" aria-hidden="true">↗</span>
-            </button>
-            <iframe id="volIframe" src="" title="Volatility surface" loading="lazy"></iframe>
-            <a id="volVisitLink" class="btn btn--ghost" href="" target="_blank" rel="noopener noreferrer">
-              <span>Open standalone</span>
+            <figure class="card__media">
+              <img src="assets/vol-surface-tsla.svg" alt="Example implied-volatility surface for TSLA, showing put skew and term structure" loading="lazy" />
+              <figcaption>Sample</figcaption>
+            </figure>
+            <a id="volVisitLink" class="btn btn--ghost" href="https://volsurface.azurewebsites.net/api/volatility-surface?ticker=TSLA" target="_blank" rel="noopener noreferrer">
+              <span>Open live TSLA surface</span>
               <span class="btn__arrow" aria-hidden="true">→</span>
             </a>
           </div>

@@ -920,12 +920,6 @@ a {
   --tilt: -0.3deg;
 }
 
-/* keep the rendered surface dark inside its light card */
-.card--04 iframe {
-  background: var(--ink);
-  border-color: var(--ink);
-}
-
 /* 06 — Cyprus: blue wash (same as the Latest / featured card) */
 .card--05 {
   --tilt: 0.4deg;
@@ -1293,9 +1287,6 @@ input[type="file"]::file-selector-button {
 .btn--ghost .btn__arrow {
   color: var(--blood);
 }
-
-#volVisitLink { display: none; }
-#volVisitLink[href]:not([href=""]) { display: inline-flex; }
 
 /* ---------- Status ---------- */
 .status {
