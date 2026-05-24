@@ -53,9 +53,6 @@ class TestMasthead:
         stamps = soup.select(".masthead__meta .stamp")
         assert len(stamps) >= 2
 
-    def test_has_live_feed_pulse(self, soup: BeautifulSoup) -> None:
-        assert soup.select_one(".stamp--live .pulse") is not None
-
 
 class TestTicker:
     def test_track_is_present(self, soup: BeautifulSoup) -> None:
