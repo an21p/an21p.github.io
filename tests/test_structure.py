@@ -70,13 +70,13 @@ class TestTicker:
 
 
 class TestProjects:
-    def test_exactly_five_cards(self, soup: BeautifulSoup) -> None:
+    def test_exactly_six_cards(self, soup: BeautifulSoup) -> None:
         cards = soup.select(".projects-section .projects .card")
-        assert len(cards) == 5
+        assert len(cards) == 6
 
     def test_cards_numbered_in_order(self, soup: BeautifulSoup) -> None:
         nums = [c.get_text(strip=True) for c in soup.select(".projects-section .card__index")]
-        assert nums == ["01", "02", "03", "04", "05"]
+        assert nums == ["01", "02", "03", "04", "05", "06"]
 
     def test_each_card_has_heading_and_tag(self, soup: BeautifulSoup) -> None:
         for card in soup.select(".projects .card"):
