@@ -878,6 +878,30 @@ a {
   opacity: 0.75;
 }
 
+/* 06 — Artefekt: full chartreuse wash (matches 02) */
+.card--06 {
+  --tilt: 0.5deg;
+  background: var(--volt);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(0,0,0,0.06) 0 1px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+.card--06 .card__tag {
+  background: var(--ink);
+  color: var(--volt);
+  border-color: var(--ink);
+}
+
+.card--06 .card__chips li {
+  background: rgba(0,0,0,0.06);
+}
+
+.card--06 .card__note {
+  border-top-color: var(--ink);
+  opacity: 0.7;
+}
+
 /* terminal chrome on vol-surface card */
 .terminal-bar {
   display: flex;
