@@ -87,8 +87,6 @@ class TestProjects:
             "imageInput",
             "uploadStatus",
             "resultImage",
-            "symbolInput",
-            "volIframe",
             "volVisitLink",
         ],
     )
@@ -141,10 +139,11 @@ class TestAccessibility:
             rel = (a.get("rel") or [])
             assert "noopener" in rel, f"external link missing rel=noopener: {a}"
 
-    def test_iframe_has_title(self, soup: BeautifulSoup) -> None:
-        iframe = soup.find("iframe")
-        assert iframe is not None
-        assert iframe.get("title"), "iframe must have a title for screen readers"
+    def test_vol_surface_link_targets_tsla(self, soup: BeautifulSoup) -> None:
+        link = soup.find(id="volVisitLink")
+        assert link is not None, "vol surface link missing"
+        assert "ticker=TSLA" in (link.get("href") or ""), \
+            "vol surface link must point to TSLA"
 
     def test_inputs_are_labelled(self, soup: BeautifulSoup) -> None:
         for input_el in soup.find_all("input"):
@@ -174,7 +173,6 @@ class TestMainJsContract:
 
     def test_exposes_expected_functions(self, main_js: str) -> None:
         assert re.search(r"\basync function sendImage\s*\(", main_js)
-        assert re.search(r"\bfunction updateIframe\s*\(", main_js)
 
     def test_uses_cors_mode_for_post(self, main_js: str) -> None:
         assert '"cors"' in main_js or "'cors'" in main_js

@@ -55,32 +55,18 @@ def test_ticker_is_visible(live_server: str, page: Page) -> None:
     expect(page.locator(".ticker__track").first).to_be_visible()
 
 
-def test_render_surface_updates_iframe_with_uppercased_ticker(
-    live_server: str, page: Page
-) -> None:
+def test_vol_surface_shows_prerendered_svg(live_server: str, page: Page) -> None:
     page.goto(live_server)
-    page.fill("#symbolInput", "aapl")
-    page.get_by_role("button", name=re.compile("Render surface", re.I)).click()
-    expect(page.locator("#volIframe")).to_have_attribute(
-        "src", re.compile(r"ticker=AAPL$")
-    )
+    img = page.locator('.card--04 .card__media img')
+    expect(img).to_be_visible()
+    expect(img).to_have_attribute("src", re.compile(r"vol-surface-tsla\.svg$"))
 
 
-def test_render_surface_reveals_standalone_link(live_server: str, page: Page) -> None:
+def test_vol_surface_link_always_targets_tsla(live_server: str, page: Page) -> None:
     page.goto(live_server)
-    page.fill("#symbolInput", "MSFT")
-    page.get_by_role("button", name=re.compile("Render surface", re.I)).click()
     link = page.locator("#volVisitLink")
     expect(link).to_be_visible()
-    expect(link).to_have_attribute("href", re.compile(r"ticker=MSFT$"))
-
-
-def test_empty_ticker_is_a_noop(live_server: str, page: Page) -> None:
-    page.goto(live_server)
-    page.fill("#symbolInput", "   ")
-    page.get_by_role("button", name=re.compile("Render surface", re.I)).click()
-    # src remains the initial (empty) value
-    expect(page.locator("#volIframe")).to_have_attribute("src", "")
+    expect(link).to_have_attribute("href", re.compile(r"ticker=TSLA$"))
 
 
 def test_queens_solver_renders_result_image(live_server: str, page: Page) -> None:
