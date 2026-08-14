@@ -105,6 +105,20 @@ jobs:
           # SvelteKit emits _app/ which Jekyll would strip — disable Jekyll.
           touch .nojekyll
 
+      # Chronotune's Flask half cannot run on Pages, so build_static.py emits a
+      # serverless bundle instead: the same UI on a client-side backend. No
+      # base path to inject — every asset reference in the output is relative,
+      # so the bundle works wherever it is dropped.
+      - name: Build chronotune
+        working-directory: chronotune
+        run: python3 build_static.py --out build
+
+      - name: Stage chronotune build at published path
+        run: |
+          mv chronotune/build /tmp/chronotune-build
+          rm -rf chronotune
+          mv /tmp/chronotune-build chronotune
+
       - name: Cache-bust assets (content digest)
         run: |
           set -euo pipefail
