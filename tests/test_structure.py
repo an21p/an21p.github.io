@@ -1,7 +1,7 @@
 """Static structural assertions — fast, no browser required.
 
 Parses ``index.html`` once and verifies the markup contract the rest of the
-site depends on (IDs wired up to ``main.js``, ticker present, four project
+site depends on (IDs wired up to ``main.js``, ticker present, the project
 cards, accessible attributes on links/images, etc.).
 """
 from __future__ import annotations
@@ -67,13 +67,13 @@ class TestTicker:
 
 
 class TestProjects:
-    def test_exactly_six_cards(self, soup: BeautifulSoup) -> None:
+    def test_exactly_seven_cards(self, soup: BeautifulSoup) -> None:
         cards = soup.select(".projects-section .projects .card")
-        assert len(cards) == 6
+        assert len(cards) == 7
 
     def test_cards_numbered_in_order(self, soup: BeautifulSoup) -> None:
         nums = [c.get_text(strip=True) for c in soup.select(".projects-section .card__index")]
-        assert nums == ["01", "02", "03", "04", "05", "06"]
+        assert nums == ["01", "02", "03", "04", "05", "06", "07"]
 
     def test_each_card_has_heading_and_tag(self, soup: BeautifulSoup) -> None:
         for card in soup.select(".projects .card"):
@@ -92,6 +92,68 @@ class TestProjects:
     )
     def test_js_wiring_ids_present(self, soup: BeautifulSoup, required_id: str) -> None:
         assert soup.find(id=required_id) is not None, f"missing #{required_id}"
+
+
+class TestFeatured:
+    """The Latest Project card. It is a second presentation of a project that
+    also appears in the grid, so the two must not drift apart."""
+
+    def test_has_exactly_one_card(self, soup: BeautifulSoup) -> None:
+        assert len(soup.select(".featured-section .card")) == 1
+
+    def test_features_the_highest_numbered_project(self, soup: BeautifulSoup) -> None:
+        """'Latest' has to mean the newest one, not whichever was pinned here
+        when the section was written."""
+        featured = soup.select_one(".featured-section .card__index")
+        grid = [c.get_text(strip=True) for c in soup.select(".projects-section .card__index")]
+        assert featured.get_text(strip=True) == max(grid)
+
+    def test_links_to_the_same_place_as_its_grid_card(self, soup: BeautifulSoup) -> None:
+        number = soup.select_one(".featured-section .card__index").get_text(strip=True)
+        twin = next(
+            card
+            for card in soup.select(".projects-section .card")
+            if card.select_one(".card__index").get_text(strip=True) == number
+        )
+        featured_href = soup.select_one(".featured-section .card a[href]")["href"]
+        assert featured_href == twin.select_one("a[href]")["href"]
+
+    def test_carries_the_new_sticker(self, soup: BeautifulSoup) -> None:
+        assert soup.select_one(".featured-section .card__sticker") is not None
+
+
+class TestSubmodulePaths:
+    """Projects deployed alongside the site are git submodules built by the
+    Pages workflow. A card can link to one only if all three agree on the path:
+    .gitmodules, the workflow, and the href."""
+
+    SUBMODULES = ("cyprus-parliamentary-elections-2026", "chronotune")
+
+    @pytest.fixture(scope="class")
+    def gitmodules(self, project_root) -> str:
+        return (project_root / ".gitmodules").read_text(encoding="utf-8")
+
+    @pytest.fixture(scope="class")
+    def workflow(self, project_root) -> str:
+        return (project_root / ".github/workflows/static.yml").read_text(encoding="utf-8")
+
+    @pytest.mark.parametrize("path", SUBMODULES)
+    def test_is_registered_as_a_submodule(self, gitmodules: str, path: str) -> None:
+        assert f"path = {path}" in gitmodules
+
+    @pytest.mark.parametrize("path", SUBMODULES)
+    def test_is_staged_by_the_deploy_workflow(self, workflow: str, path: str) -> None:
+        """Without a staging step the artifact would carry the source checkout
+        instead of the built site."""
+        assert f"mv {path}/build" in workflow
+
+    @pytest.mark.parametrize("path", SUBMODULES)
+    def test_is_linked_from_a_card(self, soup: BeautifulSoup, path: str) -> None:
+        hrefs = {a["href"] for a in soup.select(".projects-section .card a[href]")}
+        assert f"/{path}/" in hrefs
+
+    def test_workflow_checks_out_submodules(self, workflow: str) -> None:
+        assert "submodules: recursive" in workflow
 
 
 class TestExperience:

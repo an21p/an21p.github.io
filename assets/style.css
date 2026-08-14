@@ -49,6 +49,12 @@ input {
   --sky: #1d4ed8;
   --mute: #7d7a70;
 
+  /* Chronotune — the deck's own palette, carried over from the app so the
+     card and the thing it links to are recognisably the same object. */
+  --deck: #0b0c0e;
+  --deck-chrome: #a8b0b9;
+  --amber: #f0a93b;
+
   /* lines & shadow */
   --line: 3px solid var(--ink);
   --line-thick: 5px solid var(--ink);
@@ -1031,6 +1037,72 @@ a {
   color: var(--volt);
 }
 
+/* 07 — Chronotune: the app's tape deck, dark chrome.
+   Two rules carried over from the game so the card reads as the same object:
+   chrome only on edges that would catch light, and amber reserved for what is
+   live — here the play CTA and the index. Nothing decorative is amber. */
+.card--07 {
+  grid-column: span 7;
+  --tilt: -0.35deg;
+  background: var(--deck);
+  color: #d7dbe0;
+  border-color: var(--ink);
+  /* the hairline: the one chrome edge, as on the deck itself */
+  background-image: linear-gradient(180deg,
+      rgba(237, 241, 245, 0.16) 0 2px, transparent 2px);
+}
+
+.card--07 h3 {
+  color: #edf1f5;
+}
+
+.card--07 .card__index {
+  color: var(--amber);
+}
+
+.card--07 .card__index::after {
+  -webkit-text-stroke-color: var(--amber);
+}
+
+.card--07 .accent-serif {
+  color: var(--amber);
+}
+
+.card--07 .card__tag {
+  background: var(--deck-chrome);
+  color: var(--ink);
+  border-color: var(--deck-chrome);
+}
+
+.card--07 .card__chips li {
+  background: transparent;
+  color: #b9c0c8;
+  border-color: rgba(168, 176, 185, 0.45);
+}
+
+.card--07 .card__note {
+  border-top-color: rgba(168, 176, 185, 0.4);
+  color: #8f97a0;
+}
+
+.card--07 .btn--ghost {
+  background: transparent;
+  color: var(--amber);
+  border-color: var(--amber);
+  box-shadow: 6px 6px 0 rgba(240, 169, 59, 0.25);
+}
+
+.card--07 .btn--ghost:hover {
+  background: var(--amber);
+  color: var(--ink);
+  border-color: var(--amber);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.card--07 .btn--ghost .btn__arrow {
+  color: inherit;
+}
+
 /* Artefekt — embedded Spotify player (latest releases, same as artefekt.uk) */
 .card__spotify {
   width: 100%;
@@ -1469,6 +1541,73 @@ iframe {
   color: var(--ink);
   border-color: var(--volt);
   box-shadow: 6px 6px 0 var(--ink);
+}
+
+/* Whichever project is currently Latest brings its own palette; .card--featured
+   above supplies only the layout and the edge-to-edge bleed. Kept as a separate
+   modifier so swapping the featured project is a class change, not a rewrite of
+   the block above. Same deck rules as .card--07. */
+.card--deck {
+  background: var(--deck);
+  color: #d7dbe0;
+}
+
+.card--deck h3 {
+  color: #edf1f5;
+}
+
+.card--deck .card__index,
+.card--deck .accent-serif {
+  color: var(--amber);
+}
+
+.card--deck .card__index::after {
+  -webkit-text-stroke-color: var(--amber);
+}
+
+.card--deck .card__tag {
+  background: var(--deck-chrome);
+  color: var(--ink);
+  border-color: var(--deck-chrome);
+}
+
+.card--deck .card__lede {
+  color: #c3cad2;
+}
+
+.card--deck .card__chips li {
+  color: #b9c0c8;
+  border-color: rgba(168, 176, 185, 0.45);
+}
+
+.card--deck .btn--ghost {
+  color: var(--amber);
+  border-color: var(--amber);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+
+.card--deck .btn--ghost:hover {
+  background: var(--amber);
+  color: var(--ink);
+  border-color: var(--amber);
+}
+
+/* The arrow is part of the same live control, so it takes the button's colour
+   rather than the site-wide accent. */
+.card--deck .btn--ghost .btn__arrow {
+  color: inherit;
+}
+
+/* The attention pulse is tinted to the featured card's own accent. */
+.card--deck {
+  animation:
+    rise 0.8s cubic-bezier(.2, .7, .2, 1) 0.1s backwards,
+    deck-pulse 2.8s ease-in-out 1.2s infinite;
+}
+
+@keyframes deck-pulse {
+  0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(240, 169, 59, 0); }
+  50%      { box-shadow: var(--shadow-lg), 0 0 0 6px rgba(240, 169, 59, 0.35); }
 }
 
 .featured__body {
