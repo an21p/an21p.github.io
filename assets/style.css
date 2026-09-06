@@ -398,6 +398,26 @@ a {
 .stamp--volt  { --s-rot:  1.4deg; background: var(--volt); animation-delay: 1.0s; }
 .stamp--blood { --s-rot:  1deg;   background: var(--blood); color: var(--bone); animation-delay: 1.3s; }
 
+/* The one stamp you can click. .stamp is written for spans, so an <a> needs
+   its own colour and underline reset; the hover borrows the ghost button's
+   language -- fill with volt, press into the shadow -- so the row reads as
+   interactive without a second visual idiom. */
+.stamp--link {
+  --s-rot: -0.8deg;
+  background: var(--bone);
+  color: var(--ink);
+  text-decoration: none;
+  animation-delay: 1.45s;
+  transition: background 0.14s ease, transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.stamp--link:hover,
+.stamp--link:focus-visible {
+  background: var(--volt);
+  transform: rotate(var(--s-rot)) translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
 .pulse {
   width: 8px;
   height: 8px;
@@ -1101,6 +1121,47 @@ a {
 
 .card--07 .btn--ghost .btn__arrow {
   color: inherit;
+}
+
+/* 08 — Nelko: a strip of thermal label stock. Paper ground and plain ink,
+   because the printer is monochrome and 203 DPI and pretending otherwise
+   would be the one dishonest card here. The rules are the raster: 8 dots to
+   the millimetre, which is the fact the whole driver is built around. */
+.card--08 {
+  grid-column: span 5;
+  --tilt: 0.35deg;
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+  background-image:
+    repeating-linear-gradient(90deg,
+      transparent 0 7px, rgba(11, 11, 11, 0.055) 7px 8px),
+    repeating-linear-gradient(0deg,
+      transparent 0 7px, rgba(11, 11, 11, 0.035) 7px 8px);
+}
+
+.card--08 .card__index {
+  color: var(--ink);
+}
+
+.card--08 .card__index::after {
+  -webkit-text-stroke-color: var(--ink);
+}
+
+.card--08 .card__tag {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.card--08 .card__chips li {
+  background: transparent;
+  border-color: var(--ink);
+}
+
+.card--08 .card__note {
+  border-top-color: var(--ink);
+  opacity: 0.7;
 }
 
 /* Artefekt — embedded Spotify player (latest releases, same as artefekt.uk) */
