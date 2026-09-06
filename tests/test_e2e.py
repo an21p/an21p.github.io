@@ -45,9 +45,9 @@ def test_page_has_expected_title_and_masthead(live_server: str, page: Page) -> N
     expect(page.locator(".masthead__last em")).to_have_text("Pishias")
 
 
-def test_renders_six_project_cards(live_server: str, page: Page) -> None:
+def test_renders_every_project_card(live_server: str, page: Page) -> None:
     page.goto(live_server)
-    expect(page.locator(".projects-section .projects .card")).to_have_count(7)
+    expect(page.locator(".projects-section .projects .card")).to_have_count(8)
 
 
 def test_ticker_is_visible(live_server: str, page: Page) -> None:
